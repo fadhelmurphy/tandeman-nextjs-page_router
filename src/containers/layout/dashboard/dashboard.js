@@ -31,6 +31,13 @@ function CalendarLayout({ children }) {
     >
       <AppShell.Header
         className={classes.header}
+        py="sm"
+        px="lg"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
       >
         <HeaderSearch {...{toggle}} />
       </AppShell.Header>

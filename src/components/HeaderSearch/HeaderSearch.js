@@ -1,6 +1,16 @@
 import {useState} from "react"
 import cx from 'clsx';
-import { Group, Burger, rem, Container, Avatar, Text, Menu, UnstyledButton, useMantineTheme } from '@mantine/core';
+import { Group, 
+  Burger, 
+  rem, 
+  Container, 
+  Avatar, 
+  Text, 
+  Menu, 
+  UnstyledButton, 
+  useMantineTheme,
+  Autocomplete
+ } from '@mantine/core';
 import { 
   IconChevronDown, 
   IconHeart, 
@@ -10,7 +20,8 @@ import {
   IconSwitchHorizontal,
   IconLogout,
   IconPlayerPause,
-  IconTrash
+  IconTrash,
+  IconSearch
  } from '@tabler/icons-react';
 import classes from './HeaderSearch.module.css';
 
@@ -58,23 +69,37 @@ export function HeaderSearch({toggle}) {
 
 <Container
           fluid
-          py="sm"
-          px="lg"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            width: "100%"
           }}
         >
-
-<Burger onClick={toggle}  aria-label="Toggle navigation" size="md" color="white" />
+          <div 
+          style={{
+            display: "flex",
+            alignItems: "center"
+          }}>
+          <Burger onClick={toggle}  aria-label="Toggle navigation" size="md" mr="1rem" color="white" />
+          <Autocomplete
+            className={classes.search}
+            placeholder="Search"
+            comboboxProps={{ shadow: 'md' }}
+            rightSection={<IconSearch style={{ width: rem(16), height: rem(24) }} stroke={1.5} />}
+            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
+            visibleFrom="xs"
+            size="md"
+            radius="sm"
+          />
+          </div>
       <div className={classes.inner}>
 
         <Group>
           <Group ml={25} gap={5} className={classes.links} visibleFrom="sm">
             {items}
           </Group>
-          <Menu
+          <Menu shadow="md"
             width={260}
             position="bottom-end"
             transitionProps={{ transition: 'pop-top-right' }}
@@ -88,10 +113,10 @@ export function HeaderSearch({toggle}) {
               >
                 <Group gap={7}>
                   <Avatar src={user.image} alt={user.name} radius="xl" size={20} />
-                  <Text fw={500} size="sm" lh={1} mr={3}>
+                  <Text color="#fff" fw={500} size="sm" lh={1} mr={3}>
                     {user.name}
                   </Text>
-                  <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
+                  <IconChevronDown color="#fff" style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
                 </Group>
               </UnstyledButton>
             </Menu.Target>
@@ -171,13 +196,6 @@ export function HeaderSearch({toggle}) {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-          {/* <Autocomplete
-            className={classes.search}
-            placeholder="Search"
-            leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-            visibleFrom="xs"
-          /> */}
         </Group>
       </div>
       </Container>
