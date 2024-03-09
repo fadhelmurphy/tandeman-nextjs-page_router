@@ -1,0 +1,18 @@
+
+  
+  .inner {
+    height: rem(56px);
+    display: flex;
+  }
+  
+  .link {
+    display: block;
+    line-height: 1;
+    padding: rem(8px) rem(12px);
+    border-radius: var(--mantine-radius-sm);
+    text-decoration: none;
+    color: var(--mantine-color-white);
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 500;
+  
+  }
