@@ -87,7 +87,9 @@ export function HeaderSearch({toggle}) {
             placeholder="Search"
             comboboxProps={{ shadow: 'md' }}
             rightSection={<IconSearch style={{ width: rem(16), height: rem(24) }} stroke={1.5} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
+            data={[
+              { group: 'Frontend', items: ['React', 'Angular'] },
+              { group: 'Backend', items: ['Express', 'Django'] },]}
             visibleFrom="xs"
             size="md"
             radius="sm"

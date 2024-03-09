@@ -11,7 +11,7 @@ import { NavbarNested } from "Components/NavbarNested";
 import { HeaderSearch } from "Components/HeaderSearch";
 import classes from "./dashboard.module.css";
 
-function CalendarLayout({ children }) {
+function CalendarLayout({ children, title = "Dashboard" }) {
   const [opened, {toggle}] = useDisclosure(true);
 
   return (
@@ -50,7 +50,7 @@ function CalendarLayout({ children }) {
           position: 'relative'
         }}>
         <Paper shadow="md" radius="sm" p="md">
-          <Title order={2}>Dashboard</Title>
+          <Title order={2}>{title}</Title>
         </Paper>
         {children}
         </Container>
