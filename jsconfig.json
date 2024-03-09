@@ -8,10 +8,12 @@
     "Helpers/*": ["./src/helpers/*"],
     "Lib/*": ["./lib/*"],
     "Containers/*": ["./src/containers/*"],
-       "Components/*": ["./src/components/*"],
-       "Assets/*": [
-         "./public/images/*"
-       ],
+    "Hooks/*": ["./src/hooks/*"],
+    "Services/*": ["./src/services/*"],
+    "Components/*": ["./src/components/*"],
+    "Assets/*": [
+      "./public/images/*"
+    ],
    }
   }
  }

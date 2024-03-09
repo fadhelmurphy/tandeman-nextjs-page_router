@@ -1,12 +1,30 @@
 // pages/_app.js
-import { MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';// Import Mantine styles
+import { MantineProvider } from "@mantine/core";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import "@mantine/core/styles.css"; // Import Mantine styles
 
 function MyApp({ Component, pageProps }) {
+  /* Create a client */
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 3,
+        refetchOnReconnect: 'always',
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchInterval: false,
+        refetchIntervalInBackground: false,
+      },
+    },
+  });
   return (
-    <MantineProvider>
-      <Component {...pageProps} />
-    </MantineProvider>
+    <QueryClientProvider client={queryClient}>
+      <MantineProvider>
+        <Component {...pageProps} />
+      </MantineProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
