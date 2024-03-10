@@ -5,7 +5,7 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { defaultOptions } from "@/query/options";
 // import { UserProvider } from '@auth0/nextjs-auth0/client';
-import { useGlobalUserStore } from "@/stores/auth-store";
+import { useGlobalUserStore } from "@/stores/user-store";
 
 function MyApp({ Component, pageProps }) {
   const { userData } = pageProps;

@@ -1,11 +1,11 @@
 // pages/index.js
 import React from 'react';
 import DashboardLayout from '@/containers/layout/dashboard';
-import { useAllKeywords } from '@/hooks/landing-hook';
-import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+// import { useAllKeywords } from '@/hooks/landing-hook';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 // import { getServerAllKeywords } from '@/query/features/landing';
 import { withSSRHandler } from '@/helpers/ssrHandler';
-import { useGlobalUserStore } from '@/stores/auth-store';
+import { useGlobalUserStore } from '@/stores/user-store';
 
 const Home = () => {
 
