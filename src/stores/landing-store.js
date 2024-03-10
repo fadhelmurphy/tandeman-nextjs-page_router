@@ -1,5 +1,5 @@
 // store.js
-import create from 'zustand';
+import { create } from 'zustand';
 
 const useLandingStore = create((set) => ({
   data: [],
