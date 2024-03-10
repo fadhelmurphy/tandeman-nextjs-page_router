@@ -1,29 +1,23 @@
 // pages/_app.js
 import { MantineProvider } from "@mantine/core";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import "@mantine/core/styles.css"; // Import Mantine styles
+import { defaultOptions } from "@/query/options";
 
 function MyApp({ Component, pageProps }) {
   /* Create a client */
   const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 3,
-        refetchOnReconnect: 'always',
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchInterval: false,
-        refetchIntervalInBackground: false,
-      },
-    },
+    defaultOptions,
   });
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient} state={pageProps.dehydratedState}>
+    <Hydrate state={pageProps.dehydratedState}>
       <MantineProvider>
         <Component {...pageProps} />
       </MantineProvider>
       <ReactQueryDevtools initialIsOpen={false} />
+      </Hydrate>
     </QueryClientProvider>
   );
 }
