@@ -8,23 +8,22 @@ import { defaultOptions } from "@/query/options";
 import { useGlobalUserStore } from "@/stores/auth-store";
 
 function MyApp({ Component, pageProps }) {
-
-  const {user, token} = pageProps
+  const { userData } = pageProps;
   const setUser = useGlobalUserStore((state) => state.setUser);
-  setUser({user, token, status: "success"})
+  setUser({...userData, status: "success"});
   /* Create a client */
   const queryClient = new QueryClient({
     defaultOptions,
   });
   return (
-<QueryClientProvider client={queryClient} state={pageProps.dehydratedState}>
-    <Hydrate state={pageProps.dehydratedState}>
-      <MantineProvider>
-    {/* <UserProvider> */}
-        <Component {...pageProps} />
-    {/* </UserProvider> */}
-      </MantineProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+    <QueryClientProvider client={queryClient} state={pageProps.dehydratedState}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <MantineProvider>
+          {/* <UserProvider> */}
+          <Component {...pageProps} />
+          {/* </UserProvider> */}
+        </MantineProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </Hydrate>
     </QueryClientProvider>
   );
