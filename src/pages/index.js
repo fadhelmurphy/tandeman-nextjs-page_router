@@ -1,14 +1,15 @@
 // pages/index.js
 import React from 'react';
-import DashboardLayout from '@/containers/layout/dashboard/dashboard';
+import DashboardLayout from '@/containers/layout/dashboard';
 import { useAllKeywords } from '@/hooks/landing-hook';
-import { getServerAllKeywords } from '@/query/features/landing';
-import { withSSRHandler } from '@/helpers/ssrHandler';
+import { useLandingStore } from '@/stores/landing-store';
+// import { getServerAllKeywords } from '@/query/features/landing';
+// import { withSSRHandler } from '@/helpers/ssrHandler';
 
 const Home = () => {
 
   const { data: allKeywordsData } = useAllKeywords();
-  console.log(allKeywordsData, "allKeywordsData")
+  const getLandingStore = useLandingStore((state) => state.data)
   return (
     <>
     <DashboardLayout>
