@@ -1,13 +1,17 @@
 // ssrHandler.js
 import { QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
-import { getSession } from "@auth0/nextjs-auth0";
+import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
 
 const withSSRHandler = (handler) => async (context) => {
   const queryClient = new QueryClient();
 
+  const {accessToken: token} = await getAccessToken(
+    context.req,
+    context.res
+  );
   // Periksa header Authorization di sini
-  const { user = null, idToken: token = null } = await getSession(
+  const { user = null } = await getSession(
     context.req,
     context.res
   );

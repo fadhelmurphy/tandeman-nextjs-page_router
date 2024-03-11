@@ -1,8 +1,7 @@
-import { cFetch } from "Helpers/fetch";
-
+import { cFetchWithAuth } from "Helpers/fetch";
   const landingService = {
-    getAllKeywords: () => cFetch({ url: "/landing/keywords"}),
-    getMediaCount: () => cFetch({ url: "/landing/media-count"})
+    getAllKeywords: () => cFetchWithAuth({ url: "/landing/keywords"}),
+    getMediaCount: () => cFetchWithAuth({ url: "/landing/media-count"})
   }
   
   export default landingService;

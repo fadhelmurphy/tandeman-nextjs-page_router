@@ -1,3 +1,10 @@
+import { useGlobalUserStore } from "@/stores/user-store";
+
+export const cFetchWithAuth = (params) => {
+  const {token} = useGlobalUserStore.getState()
+  return cFetch({...params, token})
+}
+
 export const cFetch= async ({
     url = null, 
     method = 'GET', 

@@ -1,3 +1,9 @@
-import { handleAuth } from '@auth0/nextjs-auth0';
+import { handleAuth, handleLogin } from '@auth0/nextjs-auth0';
 
-export default handleAuth();
+export default handleAuth({
+    login: handleLogin({
+      authorizationParams: {
+        audience: process.env.AUTH0_AUDIENCE_URL, // or AUTH0_AUDIENCE
+      }
+    })
+  });
