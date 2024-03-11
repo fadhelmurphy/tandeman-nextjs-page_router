@@ -9,16 +9,17 @@ export const cFetch= async ({
     url = null, 
     method = 'GET', 
     token = null,
-    body = null
+    body = null,
+    baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL
 }) => {
-   let response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}${url}`, {
+   let response = await fetch(`${baseUrl}${url}`, {
         method,
         headers: {
           accept: 'application.json',
           'Content-Type': 'application/json',
           ...(token ? {Authorization : `Bearer ${token}`} : {})
         },
-        ...(body ? body : {}),
+        ...(body ? {body : JSON.stringify(body)} : {}),
         Cache: 'default'
       });
       if (!response.ok) {

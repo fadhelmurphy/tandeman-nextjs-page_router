@@ -6,12 +6,8 @@ import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
 const withSSRHandler = (handler) => async (context) => {
   const queryClient = new QueryClient();
 
-  const {accessToken: token} = await getAccessToken(
-    context.req,
-    context.res
-  );
   // Periksa header Authorization di sini
-  const { user = null } = await getSession(
+  const { user = null, accessToken: token } = await getSession(
     context.req,
     context.res
   );
