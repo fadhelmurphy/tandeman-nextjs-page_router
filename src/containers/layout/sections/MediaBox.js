@@ -19,7 +19,7 @@ const data = [
   { label: 'Page views', stats: '456,578', progress: 65, color: 'teal', icon: 'up' },
 ];
 
-export default function MediaBox() {
+export default function SectionMediaBox() {
   const stats = data.map((stat) => {
     return (
       <Paper radius="md" shadow='md' key={stat.label}>
