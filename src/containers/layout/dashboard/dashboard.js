@@ -10,9 +10,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { NavbarNested } from "Components/NavbarNested";
 import { HeaderSearch } from "Components/HeaderSearch";
 import classes from "./dashboard.module.css";
+import { useGlobalUserStore } from "@/stores/user-store";
 
 function CalendarLayout({ children, title = "Dashboard" }) {
   const [opened, {toggle}] = useDisclosure(true);
+  const getUser = useGlobalUserStore((state) => state.user)
 
   return (
     <AppShell
@@ -23,7 +25,7 @@ function CalendarLayout({ children, title = "Dashboard" }) {
        }}
       footer={{ height: 60 }}
       navbar={{
-        width: 300,
+        width: 250,
         breakpoint: "md",
         collapsed: { mobile: !opened, desktop: !opened },
       }}
@@ -39,7 +41,7 @@ function CalendarLayout({ children, title = "Dashboard" }) {
           justifyContent: "space-between",
         }}
       >
-        <HeaderSearch {...{toggle}} />
+        <HeaderSearch {...{toggle, userFullName: getUser?.name, userPicture: getUser?.picture}} />
       </AppShell.Header>
       <AppShell.Navbar>
         <NavbarNested />

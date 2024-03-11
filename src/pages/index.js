@@ -5,13 +5,10 @@ import DashboardLayout from '@/containers/layout/dashboard';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 // import { getServerAllKeywords } from '@/query/features/landing';
 import { withSSRHandler } from '@/helpers/ssrHandler';
-import { useGlobalUserStore } from '@/stores/user-store';
 
 const Home = () => {
 
   // const { data: allKeywordsData } = useAllKeywords();
-  const getUser = useGlobalUserStore((state) => state.user)
-  console.log(getUser, "getUser")
   return (
     <>
     <DashboardLayout>
