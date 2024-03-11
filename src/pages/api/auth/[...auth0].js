@@ -1,4 +1,3 @@
-import { cFetch } from '@/helpers/fetch';
 import { getCurrentDateTime } from '@/helpers/utils';
 import authService from '@/services/auth-service';
 import { getSession, handleAuth, handleCallback, handleLogin, handleLogout } from '@auth0/nextjs-auth0';
