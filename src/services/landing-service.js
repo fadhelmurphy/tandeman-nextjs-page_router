@@ -1,13 +1,8 @@
 import { cFetch } from "Helpers/fetch";
 
-class landingService {
-    /**
-     * Get all keywords
-     * @returns
-     */
-     getAllKeywords() {
-      return cFetch({ url: "/landing/keywords"});
-    }
+  const landingService = {
+    getAllKeywords: () => cFetch({ url: "/landing/keywords"}),
+    getMediaCount: () => cFetch({ url: "/landing/media-count"})
   }
   
-  export default new landingService();
+  export default landingService;
