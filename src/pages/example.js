@@ -6,18 +6,14 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 // import { getServerAllKeywords } from '@/query/features/landing';
 import { withSSRHandler } from '@/helpers/ssrHandler';
 import KeywordsLists from '@/components/Keywords/KeywordsLists';
-import SectionBox from 'Containers/layout/sections/Box';
-import MediaBox from 'Containers/layout/sections/MediaBox';
 
 const Home = () => {
-  const { data: allKeywordsData } = useAllKeywords();
+
+  const { data: allKeywords } = useAllKeywords();
   return (
     <>
     <DashboardLayout>
-      <SectionBox title='Keywords'>
-      <KeywordsLists data={allKeywordsData}/>
-      </SectionBox>
-      <MediaBox />
+    <KeywordsLists data={allKeywords?.data}/>
       </DashboardLayout>
     </>
   );

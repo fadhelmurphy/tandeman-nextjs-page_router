@@ -17,5 +17,9 @@ export const cFetch= async ({
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-    return await response.json();
+    const resToJson = await response.json();
+    if(resToJson?.meta?.code == 200)
+      return resToJson.data
+    else
+      throw new Error('Failed to fetch data with status error');
 }

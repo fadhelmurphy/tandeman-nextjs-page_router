@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  AppShell,
-  Container,
-  Paper,
-  Title
-} from "@mantine/core";
+import { AppShell, Container, Paper, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { NavbarNested } from "Components/NavbarNested";
 import { HeaderSearch } from "Components/HeaderSearch";
@@ -13,16 +8,16 @@ import classes from "./dashboard.module.css";
 import { useGlobalUserStore } from "@/stores/user-store";
 
 function CalendarLayout({ children, title = "Dashboard" }) {
-  const [opened, {toggle}] = useDisclosure(true);
-  const getUser = useGlobalUserStore((state) => state.user)
+  const [opened, { toggle }] = useDisclosure(true);
+  const getUser = useGlobalUserStore((state) => state.user);
 
   return (
     <AppShell
       layout="alt"
-      header={{ 
+      header={{
         height: 70,
         position: "absolute",
-       }}
+      }}
       footer={{ height: 60 }}
       navbar={{
         width: 250,
@@ -41,20 +36,35 @@ function CalendarLayout({ children, title = "Dashboard" }) {
           justifyContent: "space-between",
         }}
       >
-        <HeaderSearch {...{toggle, userFullName: getUser?.name, userPicture: getUser?.picture}} />
+        <HeaderSearch
+          {...{
+            toggle,
+            userFullName: getUser?.name,
+            userPicture: getUser?.picture,
+          }}
+        />
       </AppShell.Header>
       <AppShell.Navbar>
         <NavbarNested />
       </AppShell.Navbar>
       <AppShell.Main>
-        <Container fluid style={{
-          zIndex: "100",
-          position: 'relative'
-        }}>
-        <Paper shadow="md" radius="sm" p="md">
-          <Title order={2}>{title}</Title>
-        </Paper>
-        {children}
+        <Container
+          fluid
+          style={{
+            zIndex: "100",
+            position: "relative",
+          }}
+          p="xl"
+          pt={0}
+        >
+          <Paper shadow="md" radius="sm" p="lg">
+            <Title order={2}>{title}</Title>
+          </Paper>
+          <Container fluid py="xl" my="xl" style={{
+            padding: 0
+          }}>
+            {children}
+          </Container>
         </Container>
       </AppShell.Main>
       <AppShell.Footer p="md">
