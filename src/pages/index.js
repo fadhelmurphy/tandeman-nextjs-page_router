@@ -1,24 +1,24 @@
 // pages/index.js
-import React from 'react';
-import DashboardLayout from '@/containers/layout/dashboard';
-import { useGetAllKeywords, useGetMediaCount } from '@/hooks/landing-hook';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import React from "react";
+import DashboardLayout from "@/containers/layout/dashboard";
+import { useGetAllKeywords, useGetMediaCount } from "@/hooks/landing-hook";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 // import { getServerAllKeywords } from '@/query/features/landing';
-import { withSSRHandler } from '@/helpers/ssrHandler';
-import KeywordsLists from '@/components/Keywords/KeywordsLists';
-import SectionBox from 'Containers/layout/sections/Box';
-import SectionMediaBox from 'Containers/layout/sections/MediaBox';
+import { withSSRHandler } from "@/helpers/ssrHandler";
+import KeywordsLists from "@/components/Keywords/KeywordsLists";
+import SectionBox from "Containers/layout/sections/Box";
+import SectionMediaBox from "Containers/layout/sections/MediaBox";
 
 const Home = () => {
   const { data: allKeywordsData } = useGetAllKeywords();
   const { data: mediaCountData } = useGetMediaCount();
   return (
     <>
-    <DashboardLayout>
-      <SectionBox title='Keywords'>
-      <KeywordsLists data={allKeywordsData}/>
-      </SectionBox>
-      <SectionMediaBox />
+      <DashboardLayout>
+        <SectionBox title="Keywords">
+          <KeywordsLists data={allKeywordsData} />
+        </SectionBox>
+        <SectionMediaBox data={mediaCountData}/>
       </DashboardLayout>
     </>
   );
@@ -31,10 +31,10 @@ export const getServerSideProps = withPageAuthRequired({
     // await Promise.all([
     //   getServerAllKeywords(queryClient),
     // ]);
-  
+
     // Mengembalikan props tambahan
     return {
-      additionalProp: 'Nilai Props Tambahan',
+      additionalProp: "Nilai Props Tambahan",
     };
   }),
 });

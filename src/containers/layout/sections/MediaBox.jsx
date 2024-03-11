@@ -1,31 +1,26 @@
 import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem } from '@mantine/core';
-import { IconArrowUpRight, IconArrowDownRight, IconArticle } from '@tabler/icons-react';
+import { IconArrowUpRight, IconArrowDownRight, IconArticle, IconBrandYoutube, IconBrandTwitter, IconNews } from '@tabler/icons-react';
 
 const icons = {
   up: IconArrowUpRight,
   down: IconArrowDownRight,
 };
 
-const data = [
-  { label: 'Page views', stats: '456,578', progress: 65, color: 'teal', icon: 'up' },
-  { label: 'New users', stats: '2,550', progress: 72, color: 'blue', icon: 'up' },
-  {
-    label: 'Orders',
-    stats: '4,735',
-    progress: 52,
-    color: 'red',
-    icon: 'down',
-  },
-  { label: 'Page views', stats: '456,578', progress: 65, color: 'teal', icon: 'up' },
-];
+const iconList = {
+    'media': IconArticle,
+    'yotube': IconBrandYoutube,
+    'twitter': IconBrandTwitter,
+    'news': IconNews
+}
 
-export default function SectionMediaBox() {
-  const stats = data.map((stat) => {
+export default function SectionMediaBox({data}) {
+  const stats = data?.map((stat, idx) => {
+    const Icon = iconList[stat.platform] || IconArticle
     return (
-      <Paper radius="md" shadow='md' key={stat.label}>
+      <Paper radius="md" shadow='md' key={idx}>
         <Group>
         <div className="MediaBox__StatsIcon">
-          <IconArticle
+          <Icon
             color="white"
             size={40}
           />
@@ -38,7 +33,7 @@ export default function SectionMediaBox() {
             width: 80px;
             height: 80px;
             margin: 10px;
-            border-radius: 3px;
+            border-radius: 10px;
             line-height: 94px;
             display: flex;
             align-items: center;
@@ -48,10 +43,10 @@ export default function SectionMediaBox() {
     </style>
           <div>
             <Text c="dimmed" size="xs" tt="uppercase" fw={700}>
-              {stat.label}
+              {stat.platform}
             </Text>
             <Text fw={700} size="xl">
-              {stat.stats}
+              {stat.count}
             </Text>
           </div>
         </Group>

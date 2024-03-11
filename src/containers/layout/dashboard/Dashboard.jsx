@@ -1,5 +1,3 @@
-"use client";
-
 import { AppShell, Container, Paper, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { NavbarNested } from "Components/NavbarNested";
