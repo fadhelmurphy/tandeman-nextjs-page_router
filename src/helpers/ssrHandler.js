@@ -3,7 +3,7 @@ import { QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
 
-const withSSRHandler = (handler) => async (context) => {
+const withSSRHandler = (handler = () => {}) => async (context) => {
   const queryClient = new QueryClient();
 
   // Periksa header Authorization di sini

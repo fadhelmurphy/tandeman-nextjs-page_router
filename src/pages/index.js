@@ -10,15 +10,15 @@ import SectionBox from "Containers/layout/sections/Box";
 import SectionMediaBox from "Containers/layout/sections/MediaBox";
 
 const Home = () => {
-  const { data: allKeywordsData } = useGetAllKeywords();
-  const { data: mediaCountData } = useGetMediaCount();
+  const { data: allKeywordsData, isLoading: isAllKeywordsLoading } = useGetAllKeywords();
+  const { data: mediaCountData, isLoading: isMediaCntLoading } = useGetMediaCount();
   return (
     <>
       <DashboardLayout>
-        <SectionBox title="Keywords">
+        <SectionBox title="Keywords" isLoading={isAllKeywordsLoading}>
           <KeywordsLists data={allKeywordsData} />
         </SectionBox>
-        <SectionMediaBox data={mediaCountData}/>
+        <SectionMediaBox data={mediaCountData} />
       </DashboardLayout>
     </>
   );
@@ -26,16 +26,6 @@ const Home = () => {
 
 // Fungsi getServerSideProps yang dipindahkan queryClient-nya
 export const getServerSideProps = withPageAuthRequired({
-  getServerSideProps: withSSRHandler(async (context, queryClient) => {
-    // Menggunakan Promise.all untuk menunggu kedua query selesai di-fetch
-    // await Promise.all([
-    //   getServerAllKeywords(queryClient),
-    // ]);
-
-    // Mengembalikan props tambahan
-    return {
-      additionalProp: "Nilai Props Tambahan",
-    };
-  }),
+  getServerSideProps: withSSRHandler(),
 });
 export default Home;

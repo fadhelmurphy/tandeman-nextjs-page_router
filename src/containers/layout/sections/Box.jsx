@@ -1,7 +1,16 @@
 import React from 'react'
-import {Paper} from "@mantine/core"
+import {Container, Loader, Paper} from "@mantine/core"
 
-export default function SectionBox({title = "Section Title", children}) {
+export default function SectionBox({title = "Section Title", isLoading = false, children}) {
+
+  let LoadChildren = children
+  if(isLoading){
+    LoadChildren = (<Container p="xl" style={{
+      display: 'flex',
+      justifyContent:'center'
+    }}><Loader /></Container>)
+  }
+
   return (
     <>
     <Paper className="SectionBox" shadow="md">
@@ -9,7 +18,7 @@ export default function SectionBox({title = "Section Title", children}) {
           <h4>{title}</h4>
         </div>
         <div className="SectionBox__body">
-          {children}
+          {LoadChildren}
         </div>
     </Paper>
     <style jsx>

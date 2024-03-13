@@ -1,10 +1,5 @@
-import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem } from '@mantine/core';
+import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem, Loader, Container } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight, IconArticle, IconBrandYoutube, IconBrandTwitter, IconNews } from '@tabler/icons-react';
-
-const icons = {
-  up: IconArrowUpRight,
-  down: IconArrowDownRight,
-};
 
 const iconList = {
     'media': IconArticle,
@@ -13,7 +8,7 @@ const iconList = {
     'news': IconNews
 }
 
-export default function SectionMediaBox({data}) {
+export default function SectionMediaBox({data, isLoading}) {
   const stats = data?.map((stat, idx) => {
     const Icon = iconList[stat.platform] || IconArticle
     return (
@@ -54,7 +49,15 @@ export default function SectionMediaBox({data}) {
     );
   });
 
+  let LoadChildren = stats
+  if(isLoading){
+    LoadChildren = (<Container p="xl" style={{
+      display: 'flex',
+      justifyContent:'center'
+    }}><Loader /></Container>)
+  }
+
   return <SimpleGrid spacing="xl" cols={{ base: 1, sm: 4 }} my="xl">
-    {stats}
+    {LoadChildren}
   </SimpleGrid>;
 }
