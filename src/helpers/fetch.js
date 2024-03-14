@@ -1,4 +1,5 @@
 import { useGlobalUserStore } from "@/stores/user-store";
+import { serialize } from "./utils";
 
 export const cFetchWithAuth = (params) => {
   const {token} = useGlobalUserStore.getState()
@@ -10,9 +11,11 @@ export const cFetch= async ({
     method = 'GET', 
     token = null,
     body = null,
-    baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL
+    baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL,
+    qParams = null
 }) => {
-   let response = await fetch(`${baseUrl}${url}`, {
+  qParams = qParams ? `?${serialize(qParams)}` : serialize(qParams)
+   let response = await fetch(`${baseUrl}${url}${qParams}`, {
         method,
         headers: {
           accept: 'application.json',

@@ -1,15 +1,8 @@
 import React from 'react'
-import {Container, Loader, Paper} from "@mantine/core"
+import {Paper} from "@mantine/core"
+import LoadComponent from '@/components/LoadingComponent'
 
 export default function SectionBox({title = "Section Title", isLoading = false, children}) {
-
-  let LoadChildren = children
-  if(isLoading){
-    LoadChildren = (<Container p="xl" style={{
-      display: 'flex',
-      justifyContent:'center'
-    }}><Loader /></Container>)
-  }
 
   return (
     <>
@@ -18,7 +11,9 @@ export default function SectionBox({title = "Section Title", isLoading = false, 
           <h4>{title}</h4>
         </div>
         <div className="SectionBox__body">
-          {LoadChildren}
+          <LoadComponent isLoading={isLoading}>
+          {children}
+          </LoadComponent>
         </div>
     </Paper>
     <style jsx>

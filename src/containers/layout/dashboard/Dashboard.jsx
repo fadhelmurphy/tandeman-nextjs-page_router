@@ -14,7 +14,6 @@ function CalendarLayout({ children, title = "Dashboard" }) {
       layout="alt"
       header={{
         height: 70,
-        position: "absolute",
       }}
       footer={{ height: 60 }}
       navbar={{
@@ -29,6 +28,7 @@ function CalendarLayout({ children, title = "Dashboard" }) {
         py="sm"
         px="lg"
         style={{
+          position: "absolute",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -65,7 +65,10 @@ function CalendarLayout({ children, title = "Dashboard" }) {
           </Container>
         </Container>
       </AppShell.Main>
-      <AppShell.Footer p="md">
+      <AppShell.Footer style={{
+          position: "absolute",
+          bottom: "unset"
+      }} p="md">
         <Container fluid px="lg">
           Footer here
         </Container>

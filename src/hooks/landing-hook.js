@@ -1,5 +1,7 @@
-import { KEYWORDSQUERYKEY, MEDIACOUNTQUERYKEY } from "@/query/keys/keywords";
-import { useQuery, useQueryClient, useMutation } from "react-query";
+import { CLUSTEREXTRACTIONQUERYKEY } from "@/query/keys/cluster-extraction";
+import { KEYWORDSQUERYKEY } from "@/query/keys/keywords";
+import { MEDIACOUNTQUERYKEY } from "@/query/keys/media-count";
+import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from "react-query";
 import landingService from "Services/landing-service";
 
 const useGetAllKeywords = () => {
@@ -16,7 +18,18 @@ const useGetMediaCount = () => {
   });
 };
 
+const useGetClusterExtraction = (query) => {
+  return useInfiniteQuery({
+    queryKey:[`${CLUSTEREXTRACTIONQUERYKEY}${query}`],
+    queryFn: ({ pageParam = 1 }) => landingService.getClusterExtraction({page: pageParam, limit: 4}),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+    },
+  });
+};
+
 export {
   useGetAllKeywords,
-  useGetMediaCount
+  useGetMediaCount,
+  useGetClusterExtraction
 };

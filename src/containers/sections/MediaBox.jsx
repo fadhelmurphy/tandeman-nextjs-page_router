@@ -1,3 +1,4 @@
+import LoadComponent from '@/components/LoadingComponent';
 import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem, Loader, Container } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight, IconArticle, IconBrandYoutube, IconBrandTwitter, IconNews } from '@tabler/icons-react';
 
@@ -49,15 +50,9 @@ export default function SectionMediaBox({data, isLoading}) {
     );
   });
 
-  let LoadChildren = stats
-  if(isLoading){
-    LoadChildren = (<Container p="xl" style={{
-      display: 'flex',
-      justifyContent:'center'
-    }}><Loader /></Container>)
-  }
-
   return <SimpleGrid spacing="xl" cols={{ base: 1, sm: 4 }} my="xl">
-    {LoadChildren}
+    <LoadComponent isLoading={isLoading}>
+      {stats}
+    </LoadComponent>
   </SimpleGrid>;
 }
