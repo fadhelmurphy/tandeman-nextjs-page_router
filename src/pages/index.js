@@ -23,7 +23,9 @@ import StatisticsArticle from "@/components/StatisticsArticle";
 import TotalArticles from "@/components/TotalArticles";
 import TwoColumnsGrid from "@/containers/layout/TwoColumnsGrid";
 import ProcessingTask from "@/components/ProcessingTask";
-import Authors from "@/components/Authors";
+import Authors from "@/components/NewsAuthors";
+import TopIssuesAuthors from "@/components/TopIssuesAuthors";
+import MetaDataLists from "@/components/MetaDataLists";
 
 const Home = () => {
   const [sentimentFilter, setSentimentFilter] = useState("week");
@@ -130,7 +132,11 @@ const Home = () => {
         />
         <TwoColumnsGrid
           leftTitle="Processing Task [Not Integrated]"
-          rightTitle={["Metadata Collection [Not Integrated]", "News Authors [Not Integrated]"]}
+          rightTitle={[
+            "Metadata Collection [Not Integrated]",
+            "News Authors [Not Integrated]",
+            "Topic Issued by Author [Not Integrated]",
+          ]}
           rightDropdownText={[sentimentFilter.toUpperCase()]}
           rightDataDropdown={[filterSentimentData]}
           ChildrenLeft={
@@ -141,8 +147,9 @@ const Home = () => {
           }
           ChildrenRight={
             <>
-              <TotalArticles />
+              <MetaDataLists />
               <Authors />
+              <TopIssuesAuthors />
             </>
           }
         />

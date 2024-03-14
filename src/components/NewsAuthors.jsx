@@ -1,5 +1,5 @@
 import { Avatar, Container, Tooltip } from "@mantine/core";
-export default function Authors() {
+export default function NewsAuthors() {
   return (
     <Container
       p="xl"

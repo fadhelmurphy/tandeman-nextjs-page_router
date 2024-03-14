@@ -16,7 +16,6 @@ export default function TwoColumnsGrid({
   leftDataDropdown = [],
   rightDataDropdown = [],
 }) {
-  console.log(ChildrenRight.props.children, "ChildrenRight");
   const isRightTitleArr = Array.isArray(rightTitle);
   const isLeftTitleArr = Array.isArray(leftTitle);
   return (
@@ -40,6 +39,32 @@ export default function TwoColumnsGrid({
             </LoadComponent>
           </SectionBox>
         )}
+
+{isLeftTitleArr &&
+          ChildrenLeft.props.children.map((children, idx) => {
+            const isLeftDropdownMultiple = (leftDropdownText[idx] || null)
+            return (
+              (
+                <SectionBox
+                  key={idx}
+                  title={rightTitle[idx]}
+                  RightButtonComponent={
+                    isLeftDropdownMultiple &&
+                    leftDropdownText[idx]?.length > 0 && (
+                      <FilterButton
+                        buttonText={rightDropdownText[idx]}
+                        data={leftDropdownText[idx]}
+                      />
+                    )
+                  }
+                >
+                  <LoadComponent isLoading={isLeftLoading}>
+                    {children}
+                  </LoadComponent>
+                </SectionBox>
+              )
+            )
+          })}
       </Grid.Col>
       <Grid.Col span={6} pl="md">
         {!isRightTitleArr && (

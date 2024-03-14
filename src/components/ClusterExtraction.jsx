@@ -4,8 +4,8 @@ export default function ClusterExtraction({ data = [], isLoading, fetchNextPage 
   return (
     <>
     <Container
+      px="lg"
       style={{
-        padding: "0 25px 25px",
         maxHeight: "400px",
         overflow: "auto",
       }}
@@ -41,8 +41,8 @@ export default function ClusterExtraction({ data = [], isLoading, fetchNextPage 
           </div>
         );
       })}
-    </Container>
-    <Container style={{
+
+    <div style={{
         display: 'flex',
         justifyContent: 'center'
     }}>
@@ -57,6 +57,7 @@ export default function ClusterExtraction({ data = [], isLoading, fetchNextPage 
       >
         SEE MORE
       </Button>
+    </div>
     </Container>
     </>
   );
