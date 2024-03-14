@@ -17,8 +17,10 @@ export default function RightSidebarGrid({
   rightDataDropdown = [],
 }) {
   return (
-    <Grid columns={12} mb="xl">
-      <Grid.Col span={8}>
+    <>
+    
+    <Grid columns={12}>
+      <Grid.Col span={8} pr="md">
         <SectionBox
           title={leftTitle}
           RightButtonComponent={
@@ -30,7 +32,7 @@ export default function RightSidebarGrid({
           </LoadComponent>
         </SectionBox>
       </Grid.Col>
-      <Grid.Col span={4}>
+      <Grid.Col span={4} pl="md">
         <SectionBox
           title={rightTitle}
           RightButtonComponent={
@@ -43,5 +45,6 @@ export default function RightSidebarGrid({
         </SectionBox>
       </Grid.Col>
     </Grid>
+    </>
   );
 }

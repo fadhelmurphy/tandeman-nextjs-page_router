@@ -17,17 +17,27 @@ import RightSidebarGrid from "@/containers/layout/RightSidebarGrid";
 import ClusterExtraction from "@/components/ClusterExtraction";
 import HorizontalBarChart from "@/components/HorizontalBarChart";
 import { getCurrDate } from "@/helpers/utils";
-import {Grid} from "@mantine/core"
+import { Grid } from "@mantine/core";
 import Legend from "@/components/Legend";
+import StatisticsArticle from "@/components/StatisticsArticle";
+import TotalArticles from "@/components/TotalArticles";
+import TwoColumnsGrid from "@/containers/layout/TwoColumnsGrid";
+import ProcessingTask from "@/components/ProcessingTask";
+import Authors from "@/components/Authors";
 
 const Home = () => {
-  const [sentimentFilter, setSentimentFilter] = useState('week')
+  const [sentimentFilter, setSentimentFilter] = useState("week");
   const { data: allKeywordsData, isLoading: isAllKeywordsLoading } =
     useGetAllKeywords();
   const { data: mediaCountData, isLoading: isMediaCntLoading } =
     useGetMediaCount();
   const { data: sentimentData, isLoading: isSentimentLoading } =
-    useGetSentiment({limit: 10, page: 1, date: getCurrDate(), filter_by: sentimentFilter});
+    useGetSentiment({
+      limit: 10,
+      page: 1,
+      date: getCurrDate(),
+      filter_by: sentimentFilter,
+    });
   const {
     data: clusterExtractionData,
     isLoading: isClusterExtractionLoading,
@@ -35,75 +45,104 @@ const Home = () => {
     fetchPreviousPage,
   } = useGetClusterExtraction({ page: 1 });
   const FooterComponent = (
-
     <Grid columns={12}>
       <Grid.Col span={4}>
-        <Legend text="Positive" style={{background: "var(--mantine-color-blue-6)"}} />
-        </Grid.Col>
+        <Legend
+          text="Positive"
+          style={{ background: "var(--mantine-color-blue-6)" }}
+        />
+      </Grid.Col>
       <Grid.Col span={4}>
-        <Legend text="Negative" style={{background: "var(--mantine-color-red-6)"}} />
-        </Grid.Col>
+        <Legend
+          text="Negative"
+          style={{ background: "var(--mantine-color-red-6)" }}
+        />
+      </Grid.Col>
       <Grid.Col span={4}>
-        <Legend text="Neutral" style={{background: "var(--mantine-color-green-6)"}} />
-        </Grid.Col>
-        </Grid>
-        
-  )
-  const filterSentimentData = [
-    {
-        "parent_text": "Select Period",
+        <Legend
+          text="Neutral"
+          style={{ background: "var(--mantine-color-green-6)" }}
+        />
+      </Grid.Col>
+    </Grid>
+  );
+  const filterSentimentData = useMemo(
+    () => [
+      {
+        parent_text: "Select Period",
         data: [
-            {
-                label: "Day",
-                onClick: () => setSentimentFilter('day')
-            },
-            {
-                label: "Week",
-                onClick: () => setSentimentFilter('week')
-            },
-            {
-                label: "Month",
-                onClick: () => setSentimentFilter('month')
-            },
-            {
-                label: "Year",
-                onClick: () => setSentimentFilter('year')
-            },
-        ] 
-    },
-]
+          {
+            label: "Day",
+            onClick: () => setSentimentFilter("day"),
+          },
+          {
+            label: "Week",
+            onClick: () => setSentimentFilter("week"),
+          },
+          {
+            label: "Month",
+            onClick: () => setSentimentFilter("month"),
+          },
+          {
+            label: "Year",
+            onClick: () => setSentimentFilter("year"),
+          },
+        ],
+      },
+    ],
+    []
+  );
   return (
     <>
       <DashboardLayout>
         <SectionBox title="Keywords" isLoading={isAllKeywordsLoading}>
           <KeywordsLists data={allKeywordsData} />
         </SectionBox>
-        <SectionMediaBox 
-        data={mediaCountData} 
-        isLoading={isMediaCntLoading} 
-        />
+        <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} />
         <RightSidebarGrid
-          leftTitle="Statistics Articles Acquirement"
+          leftTitle="Statistics Articles Acquirement [Not Integrated]"
           rightTitle="Clusters Extraction"
           isRightLoading={isClusterExtractionLoading}
+          ChildrenLeft={<StatisticsArticle />}
+          ChildrenRight={
+            <ClusterExtraction
+              data={clusterExtractionData?.pages}
+              isLoading={isClusterExtractionLoading}
+              fetchNextPage={fetchNextPage}
+            />
+          }
+        />
+        <RightSidebarGrid
+          leftTitle="Total Articles Per Subjects [Not Integrated]"
+          rightTitle="Sentiment Analysis"
+          rightDropdownText={sentimentFilter.toUpperCase()}
+          rightDataDropdown={filterSentimentData}
+          ChildrenLeft={<TotalArticles />}
           ChildrenRight={
             <>
-              <ClusterExtraction
-                data={clusterExtractionData?.pages}
-                isLoading={isClusterExtractionLoading}
-                fetchNextPage={fetchNextPage}
+              <HorizontalBarChart
+                data={sentimentData}
+                isLoading={isSentimentLoading}
+                FooterComponent={FooterComponent}
               />
             </>
           }
         />
-        <RightSidebarGrid
-          leftTitle="Total Articles Per Subjects"
-          rightTitle="Sentiment Analysis"
-          rightDropdownText={sentimentFilter.toUpperCase()}
-          rightDataDropdown={filterSentimentData}
+        <TwoColumnsGrid
+          leftTitle="Processing Task [Not Integrated]"
+          rightTitle={["Metadata Collection [Not Integrated]", "News Authors [Not Integrated]"]}
+          rightDropdownText={[sentimentFilter.toUpperCase()]}
+          rightDataDropdown={[filterSentimentData]}
+          ChildrenLeft={
+            <ProcessingTask
+              data={sentimentData}
+              isLoading={isSentimentLoading}
+            />
+          }
           ChildrenRight={
             <>
-            <HorizontalBarChart data={sentimentData} isLoading={isSentimentLoading} FooterComponent={FooterComponent} />
+              <TotalArticles />
+              <Authors />
             </>
           }
         />

@@ -11,7 +11,7 @@ export default function SectionBox({
 
   return (
     <>
-    <Paper className="SectionBox" shadow="md">
+    <Paper className="SectionBox" shadow="md" mb="xl">
         <div className="SectionBox__header">
           <h4>{title}</h4>
           {RightButtonComponent}
