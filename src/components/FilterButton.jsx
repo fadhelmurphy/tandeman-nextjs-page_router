@@ -1,10 +1,12 @@
 import { Menu, Button } from '@mantine/core';
+import { IconTriangleInvertedFilled } from '@tabler/icons-react';
 
 export default function FilterButton({buttonText = null, data}) {
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
       <Button 
+        rightSection={<IconTriangleInvertedFilled size={8}/>}
         variant="light" size='sm' radius="xl">{buttonText}</Button>
       </Menu.Target>
 

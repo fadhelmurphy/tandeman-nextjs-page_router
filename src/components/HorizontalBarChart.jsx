@@ -29,11 +29,20 @@ export default function HorizontalBarChart({
             <div
               style={{
                 width: "100%",
+                justifyContent: "space-between"
               }}
             >
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2,1fr)"
+              }}>
               <Text size="md" fw="bold" component="h3" mb="0.5rem">
                 {item.keyword_group.replace(/_/g, " - ").toUpperCase()}
               </Text>
+              <Text size="sm" color="grey" ta="right" component="p" mb="0.5rem">
+                {item.total} posts
+              </Text>
+              </div>
               <div className="row">
                 <Progress.Root size="sm" className="column">
                   <Progress.Section
@@ -45,7 +54,7 @@ export default function HorizontalBarChart({
                   style={{
                     maxWidth: "80px",
                     width: "100%",
-                    textAlign: "center",
+                    textAlign: "right",
                   }}
                 >
                   <Text component="p" size="sm">
@@ -64,7 +73,7 @@ export default function HorizontalBarChart({
                   style={{
                     maxWidth: "80px",
                     width: "100%",
-                    textAlign: "center",
+                    textAlign: "right",
                   }}
                 >
                   <Text component="p" size="sm">
@@ -83,7 +92,7 @@ export default function HorizontalBarChart({
                   style={{
                     maxWidth: "80px",
                     width: "100%",
-                    textAlign: "center",
+                    textAlign: "right",
                   }}
                 >
                   <Text component="p" size="sm">

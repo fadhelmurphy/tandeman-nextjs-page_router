@@ -99,7 +99,7 @@ const Home = () => {
         <RightSidebarGrid
           leftTitle="Total Articles Per Subjects"
           rightTitle="Sentiment Analysis"
-          rightDropdownText="Filter"
+          rightDropdownText={sentimentFilter.toUpperCase()}
           rightDataDropdown={filterSentimentData}
           ChildrenRight={
             <>
