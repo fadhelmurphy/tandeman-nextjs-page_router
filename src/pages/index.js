@@ -5,6 +5,7 @@ import {
   useGetAllKeywords,
   useGetClusterExtraction,
   useGetMediaCount,
+  useGetSentiment,
 } from "@/hooks/landing-hook";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 // import { getServerAllKeywords } from '@/query/features/landing';
@@ -15,18 +16,38 @@ import SectionMediaBox from "@/containers/sections/MediaBox";
 import RightSidebarGrid from "@/containers/layout/RightSidebarGrid";
 import ClusterExtraction from "@/components/ClusterExtraction";
 import HorizontalBarChart from "@/components/HorizontalBarChart";
+import { getCurrDate } from "@/helpers/utils";
+import {Grid} from "@mantine/core"
+import Legend from "@/components/Legend";
 
 const Home = () => {
   const { data: allKeywordsData, isLoading: isAllKeywordsLoading } =
     useGetAllKeywords();
   const { data: mediaCountData, isLoading: isMediaCntLoading } =
     useGetMediaCount();
+  const { data: sentimentData, isLoading: isSentimentLoading } =
+    useGetSentiment({limit: 10, page: 1, date: getCurrDate(), filter_by: 'week'});
   const {
     data: clusterExtractionData,
     isLoading: isClusterExtractionLoading,
     fetchNextPage,
     fetchPreviousPage,
   } = useGetClusterExtraction({ page: 1 });
+  const FooterComponent = (
+
+    <Grid columns={12}>
+      <Grid.Col span={4}>
+        <Legend text="Positive" style={{background: "var(--mantine-color-blue-6)"}} />
+        </Grid.Col>
+      <Grid.Col span={4}>
+        <Legend text="Negative" style={{background: "var(--mantine-color-red-6)"}} />
+        </Grid.Col>
+      <Grid.Col span={4}>
+        <Legend text="Neutral" style={{background: "var(--mantine-color-green-6)"}} />
+        </Grid.Col>
+        </Grid>
+        
+  )
   return (
     <>
       <DashboardLayout>
@@ -38,7 +59,7 @@ const Home = () => {
           leftTitle="Statistics Articles Acquirement"
           rightTitle="Clusters Extraction"
           isRightLoading={isClusterExtractionLoading}
-          childrenRight={
+          ChildrenRight={
             <>
               <ClusterExtraction
                 data={clusterExtractionData?.pages}
@@ -51,9 +72,9 @@ const Home = () => {
         <RightSidebarGrid
           leftTitle="Total Articles Per Subjects"
           rightTitle="Sentiment Analysis"
-          childrenRight={
+          ChildrenRight={
             <>
-            <HorizontalBarChart />
+            <HorizontalBarChart data={sentimentData} isLoading={isSentimentLoading} FooterComponent={FooterComponent} />
             </>
           }
         />

@@ -4,6 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { defaultOptions } from "@/query/options";
+import "@/styles/main.css"
 // import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { useGlobalUserStore } from "@/stores/user-store";
 

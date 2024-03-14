@@ -1,6 +1,7 @@
 import { CLUSTEREXTRACTIONQUERYKEY } from "@/query/keys/cluster-extraction";
 import { KEYWORDSQUERYKEY } from "@/query/keys/keywords";
 import { MEDIACOUNTQUERYKEY } from "@/query/keys/media-count";
+import { SENTIMENTQUERYKEY } from "@/query/keys/sentiment";
 import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from "react-query";
 import landingService from "Services/landing-service";
 
@@ -18,6 +19,13 @@ const useGetMediaCount = () => {
   });
 };
 
+const useGetSentiment = (params) => {
+  return useQuery({
+    queryKey:[SENTIMENTQUERYKEY],
+    queryFn: () => landingService.getSentiment(params),
+  });
+};
+
 const useGetClusterExtraction = (query) => {
   return useInfiniteQuery({
     queryKey:[`${CLUSTEREXTRACTIONQUERYKEY}${query}`],
@@ -31,5 +39,6 @@ const useGetClusterExtraction = (query) => {
 export {
   useGetAllKeywords,
   useGetMediaCount,
-  useGetClusterExtraction
+  useGetClusterExtraction,
+  useGetSentiment
 };

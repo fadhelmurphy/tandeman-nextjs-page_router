@@ -45,7 +45,7 @@ function CalendarLayout({ children, title = "Dashboard" }) {
       <AppShell.Navbar>
         <NavbarNested />
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main bg="#F1F3F5">
         <Container
           fluid
           style={{

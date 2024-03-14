@@ -8,7 +8,6 @@ export default function ClusterExtraction({ data = [], isLoading, fetchNextPage 
         padding: "0 25px 25px",
         maxHeight: "400px",
         overflow: "auto",
-        marginBottom: "1rem"
       }}
     >
       {data?.map((page, index) => {
