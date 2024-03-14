@@ -14,7 +14,7 @@ export default function HorizontalBarChart({
           padding: "25px 25px",
         }}
       >
-        {data.map((item, idx) => (
+        {data?.length > 0 && data.map((item, idx) => (
           <div
             key={idx}
             style={{

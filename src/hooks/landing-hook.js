@@ -21,14 +21,14 @@ const useGetMediaCount = () => {
 
 const useGetSentiment = (params) => {
   return useQuery({
-    queryKey:[SENTIMENTQUERYKEY],
+    queryKey:[SENTIMENTQUERYKEY, params],
     queryFn: () => landingService.getSentiment(params),
   });
 };
 
 const useGetClusterExtraction = (query) => {
   return useInfiniteQuery({
-    queryKey:[`${CLUSTEREXTRACTIONQUERYKEY}${query}`],
+    queryKey:[CLUSTEREXTRACTIONQUERYKEY, query],
     queryFn: ({ pageParam = 1 }) => landingService.getClusterExtraction({page: pageParam, limit: 4}),
     getNextPageParam(lastPage, allPages) {
       return lastPage.length > 0 ? allPages.length + 1 : undefined;

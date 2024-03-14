@@ -2,6 +2,7 @@ import { useGlobalUserStore } from "@/stores/user-store";
 import { serialize } from "./utils";
 
 export const cFetchWithAuth = (params) => {
+  console.log(params, "ini params")
   const {token} = useGlobalUserStore.getState()
   return cFetch({...params, token})
 }

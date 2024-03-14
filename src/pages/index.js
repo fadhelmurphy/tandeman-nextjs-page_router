@@ -1,5 +1,5 @@
 // pages/index.js
-import React from "react";
+import React, { useMemo, useState } from "react";
 import DashboardLayout from "@/containers/layout/dashboard";
 import {
   useGetAllKeywords,
@@ -21,12 +21,13 @@ import {Grid} from "@mantine/core"
 import Legend from "@/components/Legend";
 
 const Home = () => {
+  const [sentimentFilter, setSentimentFilter] = useState('week')
   const { data: allKeywordsData, isLoading: isAllKeywordsLoading } =
     useGetAllKeywords();
   const { data: mediaCountData, isLoading: isMediaCntLoading } =
     useGetMediaCount();
   const { data: sentimentData, isLoading: isSentimentLoading } =
-    useGetSentiment({limit: 10, page: 1, date: getCurrDate(), filter_by: 'week'});
+    useGetSentiment({limit: 10, page: 1, date: getCurrDate(), filter_by: sentimentFilter});
   const {
     data: clusterExtractionData,
     isLoading: isClusterExtractionLoading,
@@ -48,13 +49,39 @@ const Home = () => {
         </Grid>
         
   )
+  const filterSentimentData = [
+    {
+        "parent_text": "Select Period",
+        data: [
+            {
+                label: "Day",
+                onClick: () => setSentimentFilter('day')
+            },
+            {
+                label: "Week",
+                onClick: () => setSentimentFilter('week')
+            },
+            {
+                label: "Month",
+                onClick: () => setSentimentFilter('month')
+            },
+            {
+                label: "Year",
+                onClick: () => setSentimentFilter('year')
+            },
+        ] 
+    },
+]
   return (
     <>
       <DashboardLayout>
         <SectionBox title="Keywords" isLoading={isAllKeywordsLoading}>
           <KeywordsLists data={allKeywordsData} />
         </SectionBox>
-        <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} />
+        <SectionMediaBox 
+        data={mediaCountData} 
+        isLoading={isMediaCntLoading} 
+        />
         <RightSidebarGrid
           leftTitle="Statistics Articles Acquirement"
           rightTitle="Clusters Extraction"
@@ -72,6 +99,8 @@ const Home = () => {
         <RightSidebarGrid
           leftTitle="Total Articles Per Subjects"
           rightTitle="Sentiment Analysis"
+          rightDropdownText="Filter"
+          rightDataDropdown={filterSentimentData}
           ChildrenRight={
             <>
             <HorizontalBarChart data={sentimentData} isLoading={isSentimentLoading} FooterComponent={FooterComponent} />
