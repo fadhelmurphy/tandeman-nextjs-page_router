@@ -14,7 +14,7 @@ const afterCallback = async (req, res, session, _) => {
     let user = {...session?.user ?? null}
     user = {...user, last_logout: getCurrentDateTime(), is_login: false}
     await authService.postAuthLogin({user, token: session?.accessToken});
-    await handleLogout(req, res, { returnTo: '/' })
+    await handleLogout(req, res, { returnTo: '/dashboard' })
     }
 export default handleAuth({
     login: handleLogin({
