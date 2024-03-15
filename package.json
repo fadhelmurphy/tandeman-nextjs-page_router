@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cp .env.local .env && next dev",
-    "build:local": "cp .env.local .env && next build",
-    "build:prod": "cp .env.production .env && next build",
+    "dev": "cp .env.dev .env.local && next dev",
+    "dev:prod": "cp .env.prod .env.local && next dev",
+    "build:local": "cp .env.dev .env.production && next build",
+    "build:prod": "cp .env.prod .env.production && next build",
     "start": "next start",
     "lint": "next lint"
   },
