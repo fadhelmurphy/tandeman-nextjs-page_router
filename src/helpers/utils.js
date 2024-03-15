@@ -41,3 +41,21 @@ export const getCurrDate = () => {
   const currentDate = `${year}-${month}-${day}`; // "2022-06-17"
   return currentDate;
 };
+
+export const toCapitalize = (text) => {
+  // Membagi teks menjadi array kata
+  var words = text.split(" ");
+
+  // Loop melalui setiap kata dan melakukan capitalize pada huruf pertama
+  for (var i = 0; i < words.length; i++) {
+      // Memastikan kata tidak kosong
+      if (words[i]) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+  }
+
+  // Menggabungkan kembali array kata menjadi satu teks
+  var capitalizedText = words.join(" ");
+
+  return capitalizedText;
+}

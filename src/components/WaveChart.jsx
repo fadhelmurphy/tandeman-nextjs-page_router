@@ -27,17 +27,17 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
-  tension: 0.3 // 2. Set the tension (curvature) of the line to your liking.  (You may want to lower this a smidge.)
+  tension: 0.5 // 2. Set the tension (curvature) of the line to your liking.  (You may want to lower this a smidge.)
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labelsExample = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const data = {
-  labels,
+const dataExample = {
+  labels: labelsExample,
   datasets: [
     {
       label: "Dataset 1",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
+      data: labelsExample.map(() => faker.datatype.number({ min: 0, max: 500 })),
       borderColor: "rgb(255, 99, 132)",
       backgroundColor: "rgba(255, 0, 0)",
       fill: {
@@ -47,7 +47,7 @@ export const data = {
     },
     {
       label: "Dataset 2",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 500 })),
+      data: labelsExample.map(() => faker.datatype.number({ min: 0, max: 500 })),
       borderColor: "rgb(53, 162, 235)",
       backgroundColor: "rgba(53, 162, 235, 0.3)",
       fill: "origin" // Set the fill options
@@ -55,6 +55,7 @@ export const data = {
   ]
 };
 
-export default function WaveChart() {
-  return <Line options={options} data={data} />;
+export default function WaveChart({data = []}) {
+  if(data?.length == 0) return <></>
+  else return <Line options={options} data={data} />;
 }

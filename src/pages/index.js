@@ -4,6 +4,8 @@ import DashboardLayout from "@/containers/layout/dashboard";
 import {
   useGetAllKeywords,
   useGetClusterExtraction,
+  useGetCountArticlesByAcquire,
+  useGetCountArticlesByDate,
   useGetMediaCount,
   useGetSentiment,
 } from "@/hooks/landing-hook";
@@ -29,6 +31,7 @@ import MetaDataLists from "@/components/MetaDataLists";
 
 const Home = () => {
   const [sentimentFilter, setSentimentFilter] = useState("week");
+  const [articlesFilter, setArticlesFilter] = useState("week");
   const { data: allKeywordsData, isLoading: isAllKeywordsLoading } =
     useGetAllKeywords();
   const { data: mediaCountData, isLoading: isMediaCntLoading } =
@@ -46,6 +49,9 @@ const Home = () => {
     fetchNextPage,
     fetchPreviousPage,
   } = useGetClusterExtraction({ page: 1 });
+  const { data: countArticlesData, isLoading: isCountArticlesLoading } =
+    useGetCountArticlesByAcquire();
+    const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading } = useGetCountArticlesByDate(articlesFilter)
   const FooterComponent = (
     <Grid columns={12}>
       <Grid.Col span={4}>
@@ -94,6 +100,24 @@ const Home = () => {
     ],
     []
   );
+  const filterArticlesData = useMemo(
+    () => [
+      {
+        parent_text: "Select Period",
+        data: [
+          {
+            label: "Week",
+            onClick: () => setArticlesFilter("week"),
+          },
+          {
+            label: "Month",
+            onClick: () => setArticlesFilter("month"),
+          },
+        ],
+      },
+    ],
+    []
+  );
   return (
     <>
       <DashboardLayout>
@@ -102,10 +126,19 @@ const Home = () => {
         </SectionBox>
         <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} />
         <RightSidebarGrid
-          leftTitle="Statistics Articles Acquirement [Not Integrated]"
+          leftTitle="Statistics Articles Acquirement [On Develop]"
           rightTitle="Clusters Extraction"
           isRightLoading={isClusterExtractionLoading}
-          ChildrenLeft={<StatisticsArticle />}
+          leftDataDropdown={filterArticlesData}
+          leftDropdownText={articlesFilter}
+          ChildrenLeft={
+            <StatisticsArticle
+              isWaveChartLoading={isCountArticlesDateLoading}
+              isAcquireLoading={isCountArticlesLoading}
+              acquireData={countArticlesData}
+              waveChartData={countArticlesDateData}
+            />
+          }
           ChildrenRight={
             <ClusterExtraction
               data={clusterExtractionData?.pages}
