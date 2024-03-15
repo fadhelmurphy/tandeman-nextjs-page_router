@@ -60,6 +60,28 @@ const landingService = {
     }
     return res;
   },
+  getCountArticlesByKeyword: async () => {
+    const getData = await cFetchWithAuth({
+      url: "/landing/count-articles-by-keyword",
+    });
+    const labels = getData?.map((item) => item.keyword_group)
+    const res = {
+      labels,
+      datasets: [
+        {
+          label: "Articles by Keyword",
+          data: labels?.map((_,idx) => getData[idx].total),
+          borderColor: "#7AD1DD",
+          backgroundColor: "#7AD1DD",
+          fill: {
+            target: "origin", // Set the fill options
+            above: "#7AD1DD"
+          }
+        },
+      ]
+    }
+    return res;
+  },
 };
 
 export default landingService;

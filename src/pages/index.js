@@ -6,6 +6,7 @@ import {
   useGetClusterExtraction,
   useGetCountArticlesByAcquire,
   useGetCountArticlesByDate,
+  useGetCountArticlesByKeyword,
   useGetMediaCount,
   useGetSentiment,
 } from "@/hooks/landing-hook";
@@ -28,6 +29,7 @@ import ProcessingTask from "@/components/ProcessingTask";
 import Authors from "@/components/NewsAuthors";
 import TopIssuesAuthors from "@/components/TopIssuesAuthors";
 import MetaDataLists from "@/components/MetaDataLists";
+import KeywordArticles from "@/components/KeywordArticles";
 
 const Home = () => {
   const [sentimentFilter, setSentimentFilter] = useState("week");
@@ -51,7 +53,10 @@ const Home = () => {
   } = useGetClusterExtraction({ page: 1 });
   const { data: countArticlesData, isLoading: isCountArticlesLoading } =
     useGetCountArticlesByAcquire();
-    const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading } = useGetCountArticlesByDate(articlesFilter)
+  const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading } =
+    useGetCountArticlesByDate(articlesFilter);
+    const { data: countArticlesKeywordData, isLoading: isCountArticlesKeywordLoading } =
+      useGetCountArticlesByKeyword();
   const FooterComponent = (
     <Grid columns={12}>
       <Grid.Col span={4}>
@@ -126,7 +131,7 @@ const Home = () => {
         </SectionBox>
         <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} />
         <RightSidebarGrid
-          leftTitle="Statistics Articles Acquirement [On Develop]"
+          leftTitle="Statistics Articles Acquirement"
           rightTitle="Clusters Extraction"
           isRightLoading={isClusterExtractionLoading}
           leftDataDropdown={filterArticlesData}
@@ -148,11 +153,16 @@ const Home = () => {
           }
         />
         <RightSidebarGrid
-          leftTitle="Total Articles Per Subjects [Not Integrated]"
+          leftTitle="Total Articles Per Subjects"
           rightTitle="Sentiment Analysis"
-          rightDropdownText={sentimentFilter.toUpperCase()}
+          rightDropdownText={sentimentFilter}
           rightDataDropdown={filterSentimentData}
-          ChildrenLeft={<TotalArticles />}
+          ChildrenLeft={
+            <KeywordArticles 
+            waveChartData={countArticlesKeywordData}
+            isWaveChartLoading={isCountArticlesKeywordLoading}
+            />
+          }
           ChildrenRight={
             <>
               <HorizontalBarChart

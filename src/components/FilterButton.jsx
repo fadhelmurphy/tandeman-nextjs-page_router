@@ -1,3 +1,4 @@
+import { toCapitalize } from '@/helpers/utils';
 import { Menu, Button } from '@mantine/core';
 import { IconTriangleInvertedFilled } from '@tabler/icons-react';
 
@@ -7,7 +8,7 @@ export default function FilterButton({buttonText = null, data}) {
       <Menu.Target>
       <Button 
         rightSection={<IconTriangleInvertedFilled size={8}/>}
-        variant="light" size='sm' radius="xl">{buttonText}</Button>
+        variant="light" size='sm' radius="xl">{toCapitalize(buttonText)}</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

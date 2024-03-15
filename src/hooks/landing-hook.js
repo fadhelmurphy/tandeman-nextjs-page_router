@@ -1,4 +1,4 @@
-import { COUNTARTICLESBYACQUIRE, COUNTARTICLESBYDATE } from "@/query/keys/articles";
+import { COUNTARTICLESBYACQUIRE, COUNTARTICLESBYDATE, COUNTARTICLESBYKEYWORD } from "@/query/keys/articles";
 import { CLUSTEREXTRACTIONQUERYKEY } from "@/query/keys/cluster-extraction";
 import { KEYWORDSQUERYKEY } from "@/query/keys/keywords";
 import { MEDIACOUNTQUERYKEY } from "@/query/keys/media-count";
@@ -51,6 +51,14 @@ const useGetCountArticlesByDate = (params) => {
   });
 };
 
+
+const useGetCountArticlesByKeyword = (params) => {
+  return useQuery({
+    queryKey:[COUNTARTICLESBYKEYWORD, params],
+    queryFn: () => landingService.getCountArticlesByKeyword(),
+  });
+};
+
 export {
   useGetAllKeywords,
   useGetMediaCount,
@@ -58,4 +66,5 @@ export {
   useGetSentiment,
   useGetCountArticlesByAcquire,
   useGetCountArticlesByDate,
+  useGetCountArticlesByKeyword,
 };

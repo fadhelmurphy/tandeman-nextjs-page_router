@@ -40,30 +40,28 @@ export default function TwoColumnsGrid({
           </SectionBox>
         )}
 
-{isLeftTitleArr &&
+        {isLeftTitleArr &&
           ChildrenLeft.props.children.map((children, idx) => {
-            const isLeftDropdownMultiple = (leftDropdownText[idx] || null)
+            const isLeftDropdownMultiple = leftDropdownText[idx] || null;
             return (
-              (
-                <SectionBox
-                  key={idx}
-                  title={rightTitle[idx]}
-                  RightButtonComponent={
-                    isLeftDropdownMultiple &&
-                    leftDropdownText[idx]?.length > 0 && (
-                      <FilterButton
-                        buttonText={rightDropdownText[idx]}
-                        data={leftDropdownText[idx]}
-                      />
-                    )
-                  }
-                >
-                  <LoadComponent isLoading={isLeftLoading}>
-                    {children}
-                  </LoadComponent>
-                </SectionBox>
-              )
-            )
+              <SectionBox
+                key={idx}
+                title={rightTitle[idx]}
+                RightButtonComponent={
+                  isLeftDropdownMultiple &&
+                  leftDropdownText[idx]?.length > 0 && (
+                    <FilterButton
+                      buttonText={rightDropdownText[idx]}
+                      data={leftDropdownText[idx]}
+                    />
+                  )
+                }
+              >
+                <LoadComponent isLoading={isLeftLoading}>
+                  {children}
+                </LoadComponent>
+              </SectionBox>
+            );
           })}
       </Grid.Col>
       <Grid.Col span={6} pl="md">
@@ -88,28 +86,26 @@ export default function TwoColumnsGrid({
 
         {isRightTitleArr &&
           ChildrenRight.props.children.map((children, idx) => {
-            const isRightDropdownMultiple = (rightDropdownText[idx] || null)
+            const isRightDropdownMultiple = rightDropdownText[idx] || null;
             return (
-              (
-                <SectionBox
-                  key={idx}
-                  title={rightTitle[idx]}
-                  RightButtonComponent={
-                    isRightDropdownMultiple &&
-                    rightDataDropdown[idx]?.length > 0 && (
-                      <FilterButton
-                        buttonText={rightDropdownText[idx]}
-                        data={rightDataDropdown[idx]}
-                      />
-                    )
-                  }
-                >
-                  <LoadComponent isLoading={isRightLoading}>
-                    {children}
-                  </LoadComponent>
-                </SectionBox>
-              )
-            )
+              <SectionBox
+                key={idx}
+                title={rightTitle[idx]}
+                RightButtonComponent={
+                  isRightDropdownMultiple &&
+                  rightDataDropdown[idx]?.length > 0 && (
+                    <FilterButton
+                      buttonText={rightDropdownText[idx]}
+                      data={rightDataDropdown[idx]}
+                    />
+                  )
+                }
+              >
+                <LoadComponent isLoading={isRightLoading}>
+                  {children}
+                </LoadComponent>
+              </SectionBox>
+            );
           })}
       </Grid.Col>
     </Grid>

@@ -16,33 +16,99 @@ export default function RightSidebarGrid({
   leftDataDropdown = [],
   rightDataDropdown = [],
 }) {
+  const isRightTitleArr = Array.isArray(rightTitle);
+  const isLeftTitleArr = Array.isArray(leftTitle);
   return (
     <>
     
     <Grid columns={12}>
       <Grid.Col span={8} pr="md">
-        <SectionBox
-          title={leftTitle}
-          RightButtonComponent={
-            leftDropdownText && leftDataDropdown.length > 0 && (<FilterButton buttonText={leftDropdownText} data={leftDataDropdown} />)
-          }
-        >
-          <LoadComponent isLoading={isLeftLoading}>
-            {ChildrenLeft}
-          </LoadComponent>
-        </SectionBox>
+        {!isLeftTitleArr && (
+          <SectionBox
+            title={leftTitle}
+            RightButtonComponent={
+              leftDropdownText &&
+              leftDataDropdown.length > 0 && (
+                <FilterButton
+                  buttonText={leftDropdownText}
+                  data={leftDataDropdown}
+                />
+              )
+            }
+          >
+            <LoadComponent isLoading={isLeftLoading}>
+              {ChildrenLeft}
+            </LoadComponent>
+          </SectionBox>
+        )}
+
+        {isLeftTitleArr &&
+          ChildrenLeft.props.children.map((children, idx) => {
+            const isLeftDropdownMultiple = leftDropdownText[idx] || null;
+            return (
+              <SectionBox
+                key={idx}
+                title={rightTitle[idx]}
+                RightButtonComponent={
+                  isLeftDropdownMultiple &&
+                  leftDropdownText[idx]?.length > 0 && (
+                    <FilterButton
+                      buttonText={rightDropdownText[idx]}
+                      data={leftDropdownText[idx]}
+                    />
+                  )
+                }
+              >
+                <LoadComponent isLoading={isLeftLoading}>
+                  {children}
+                </LoadComponent>
+              </SectionBox>
+            );
+          })}
       </Grid.Col>
       <Grid.Col span={4} pl="md">
-        <SectionBox
-          title={rightTitle}
-          RightButtonComponent={
-            rightDropdownText && rightDataDropdown.length > 0 && (<FilterButton buttonText={rightDropdownText} data={rightDataDropdown} />)
-          }
-        >
-          <LoadComponent isLoading={isRightLoading}>
-            {ChildrenRight}
-          </LoadComponent>
-        </SectionBox>
+        {!isRightTitleArr && (
+          <SectionBox
+            title={rightTitle}
+            RightButtonComponent={
+              rightDropdownText &&
+              rightDataDropdown.length > 0 && (
+                <FilterButton
+                  buttonText={rightDropdownText}
+                  data={rightDataDropdown}
+                />
+              )
+            }
+          >
+            <LoadComponent isLoading={isRightLoading}>
+              {ChildrenRight}
+            </LoadComponent>
+          </SectionBox>
+        )}
+
+        {isRightTitleArr &&
+          ChildrenRight.props.children.map((children, idx) => {
+            const isRightDropdownMultiple = rightDropdownText[idx] || null;
+            return (
+              <SectionBox
+                key={idx}
+                title={rightTitle[idx]}
+                RightButtonComponent={
+                  isRightDropdownMultiple &&
+                  rightDataDropdown[idx]?.length > 0 && (
+                    <FilterButton
+                      buttonText={rightDropdownText[idx]}
+                      data={rightDataDropdown[idx]}
+                    />
+                  )
+                }
+              >
+                <LoadComponent isLoading={isRightLoading}>
+                  {children}
+                </LoadComponent>
+              </SectionBox>
+            );
+          })}
       </Grid.Col>
     </Grid>
     </>
