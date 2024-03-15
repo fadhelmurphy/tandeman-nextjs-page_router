@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Avatar, Container, Progress, Grid } from "@mantine/core";
 import LoadComponent from "./LoadingComponent";
+import { toCapitalize } from "@/helpers/utils";
 
 export default function HorizontalBarChart({
   data = [],
@@ -37,7 +38,7 @@ export default function HorizontalBarChart({
                 gridTemplateColumns: "repeat(2,1fr)"
               }}>
               <Text size="md" fw="bold" component="h3" mb="0.5rem">
-                {item.keyword_group.replace(/_/g, " - ").toUpperCase()}
+                {toCapitalize(item.keyword_group.replace(/_/g, " - "))}
               </Text>
               <Text size="sm" color="grey" ta="right" component="p" mb="0.5rem">
                 {item.total} posts

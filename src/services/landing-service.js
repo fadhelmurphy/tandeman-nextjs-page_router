@@ -1,3 +1,4 @@
+import { toCapitalize } from "@/helpers/utils";
 import { cFetchWithAuth } from "Helpers/fetch";
 const landingService = {
   getAllKeywords: () => cFetchWithAuth({ url: "/landing/keywords" }),
@@ -64,7 +65,7 @@ const landingService = {
     const getData = await cFetchWithAuth({
       url: "/landing/count-articles-by-keyword",
     });
-    const labels = getData?.map((item) => item.keyword_group)
+    const labels = getData?.map((item) => toCapitalize(item.keyword_group.replace("_", " - ")))
     const res = {
       labels,
       datasets: [
