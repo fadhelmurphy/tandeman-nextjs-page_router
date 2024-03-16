@@ -11,7 +11,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # This will do the trick, use the corresponding env file for each environme
-RUN yarn build
+RUN yarn build:prod
 # 3. Production image, copy all the files and run next
 FROM node:18-alpine AS runner
 WORKDIR /app
