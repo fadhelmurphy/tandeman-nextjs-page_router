@@ -7,6 +7,8 @@ import {
   useGetCountArticlesByAcquire,
   useGetCountArticlesByDate,
   useGetCountArticlesByKeyword,
+  useGetCountYtComments,
+  useGetCountYtVideos,
   useGetMediaCount,
   useGetSentiment,
 } from "@/hooks/landing-hook";
@@ -55,8 +57,16 @@ const Home = () => {
     useGetCountArticlesByAcquire();
   const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading } =
     useGetCountArticlesByDate(articlesFilter);
-    const { data: countArticlesKeywordData, isLoading: isCountArticlesKeywordLoading } =
-      useGetCountArticlesByKeyword();
+  const {
+    data: countArticlesKeywordData,
+    isLoading: isCountArticlesKeywordLoading,
+  } = useGetCountArticlesByKeyword();
+  const { data: countYtCommentsData, isLoading: isCountYtCommentsLoading } =
+    useGetCountYtComments();
+
+  const { data: countYtVideosData, isLoading: isCountYtVideosLoading } =
+    useGetCountYtVideos();
+
   const FooterComponent = (
     <Grid columns={12}>
       <Grid.Col span={4}>
@@ -158,10 +168,12 @@ const Home = () => {
           rightDropdownText={sentimentFilter}
           rightDataDropdown={filterSentimentData}
           ChildrenLeft={
-            <KeywordArticles 
-            waveChartData={countArticlesKeywordData}
-            isWaveChartLoading={isCountArticlesKeywordLoading}
-            />
+            <>
+              <KeywordArticles
+                waveChartData={countArticlesKeywordData}
+                isWaveChartLoading={isCountArticlesKeywordLoading}
+              />
+            </>
           }
           ChildrenRight={
             <>
@@ -169,6 +181,26 @@ const Home = () => {
                 data={sentimentData}
                 isLoading={isSentimentLoading}
                 FooterComponent={FooterComponent}
+              />
+            </>
+          }
+        />
+        <TwoColumnsGrid
+          leftTitle="Youtube Videos by Week"
+          rightTitle="Youtube Comments by Week"
+          ChildrenLeft={
+            <>
+              <KeywordArticles
+                waveChartData={countYtVideosData}
+                isWaveChartLoading={isCountYtVideosLoading}
+              />
+            </>
+          }
+          ChildrenRight={
+            <>
+              <KeywordArticles
+                waveChartData={countYtCommentsData}
+                isWaveChartLoading={isCountYtCommentsLoading}
               />
             </>
           }

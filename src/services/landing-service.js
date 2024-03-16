@@ -83,6 +83,50 @@ const landingService = {
     }
     return res;
   },
+  getCountYtComments: async () => {
+    const getData = await cFetchWithAuth({
+      url: "/landing/count-yt-comments",
+    });
+    const labels = getData?.map((item) => toCapitalize(item.tanggal))
+    const res = {
+      labels,
+      datasets: [
+        {
+          label: "Youtube Comments",
+          data: labels?.map((_,idx) => getData[idx].total),
+          borderColor: "#FF6B6B",
+          backgroundColor: "#FF6B6B",
+          fill: {
+            target: "origin", // Set the fill options
+            above: "#FF6B6B"
+          }
+        },
+      ]
+    }
+    return res;
+  },
+  getCountYtVideos: async () => {
+    const getData = await cFetchWithAuth({
+      url: "/landing/count-yt-videos",
+    });
+    const labels = getData?.map((item) => toCapitalize(item.tanggal))
+    const res = {
+      labels,
+      datasets: [
+        {
+          label: "Youtube Videos",
+          data: labels?.map((_,idx) => getData[idx].total),
+          borderColor: "#E03131",
+          backgroundColor: "#E03131",
+          fill: {
+            target: "origin", // Set the fill options
+            above: "#E03131"
+          }
+        },
+      ]
+    }
+    return res;
+  },
 };
 
 export default landingService;

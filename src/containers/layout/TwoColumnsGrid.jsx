@@ -11,8 +11,8 @@ export default function TwoColumnsGrid({
   ChildrenRight = <></>,
   isLeftLoading = false,
   isRightLoading = false,
-  leftDropdownText = null,
-  rightDropdownText = null,
+  leftDropdownText = [],
+  rightDropdownText = [],
   leftDataDropdown = [],
   rightDataDropdown = [],
 }) {
@@ -41,8 +41,8 @@ export default function TwoColumnsGrid({
         )}
 
         {isLeftTitleArr &&
-          ChildrenLeft.props.children.map((children, idx) => {
-            const isLeftDropdownMultiple = leftDropdownText[idx] || null;
+          ChildrenLeft.props.children.length && ChildrenLeft.props?.children.map((children, idx) => {
+            const isLeftDropdownMultiple = leftDropdownText.length ? leftDropdownText[idx] : null;
             return (
               <SectionBox
                 key={idx}
@@ -85,8 +85,8 @@ export default function TwoColumnsGrid({
         )}
 
         {isRightTitleArr &&
-          ChildrenRight.props.children.map((children, idx) => {
-            const isRightDropdownMultiple = rightDropdownText[idx] || null;
+          ChildrenRight.props.children.length && ChildrenRight.props?.children.map((children, idx) => {
+            const isRightDropdownMultiple = rightDropdownText.length ? rightDropdownText[idx] : null;
             return (
               <SectionBox
                 key={idx}

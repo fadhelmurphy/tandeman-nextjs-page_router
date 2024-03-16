@@ -3,10 +3,10 @@ import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem, Loader, Cont
 import { IconArrowUpRight, IconArrowDownRight, IconArticle, IconBrandYoutube, IconBrandTwitter, IconNews } from '@tabler/icons-react';
 
 const iconList = {
-    'media': IconArticle,
-    'yotube': IconBrandYoutube,
-    'twitter': IconBrandTwitter,
-    'news': IconNews
+    media: IconArticle,
+    youtube: IconBrandYoutube,
+    twitter: IconBrandTwitter,
+    news: IconNews
 }
 
 export default function SectionMediaBox({data, isLoading}) {

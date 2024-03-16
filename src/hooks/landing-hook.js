@@ -3,6 +3,7 @@ import { CLUSTEREXTRACTIONQUERYKEY } from "@/query/keys/cluster-extraction";
 import { KEYWORDSQUERYKEY } from "@/query/keys/keywords";
 import { MEDIACOUNTQUERYKEY } from "@/query/keys/media-count";
 import { SENTIMENTQUERYKEY } from "@/query/keys/sentiment";
+import { COUNTYOUTUBECOMMENTS, COUNTYOUTUBEVIDEOS } from "@/query/keys/youtube";
 import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from "react-query";
 import landingService from "Services/landing-service";
 
@@ -51,11 +52,24 @@ const useGetCountArticlesByDate = (params) => {
   });
 };
 
-
 const useGetCountArticlesByKeyword = (params) => {
   return useQuery({
     queryKey:[COUNTARTICLESBYKEYWORD, params],
     queryFn: () => landingService.getCountArticlesByKeyword(),
+  });
+};
+
+const useGetCountYtComments = () => {
+  return useQuery({
+    queryKey:[COUNTYOUTUBECOMMENTS],
+    queryFn: () => landingService.getCountYtComments(),
+  });
+};
+
+const useGetCountYtVideos = () => {
+  return useQuery({
+    queryKey:[COUNTYOUTUBEVIDEOS],
+    queryFn: () => landingService.getCountYtVideos(),
   });
 };
 
@@ -67,4 +81,6 @@ export {
   useGetCountArticlesByAcquire,
   useGetCountArticlesByDate,
   useGetCountArticlesByKeyword,
+  useGetCountYtComments,
+  useGetCountYtVideos
 };
