@@ -28,13 +28,14 @@ const logoutCallback = async (req, res) => {
   } catch (error) {
     console.log("Something went wrong! with error: ", error);
   }
-  await handleLogout(req, res, { returnTo: "/dashboard" });
+  await handleLogout(req, res, { returnTo: process.env.NEXT_PUBLIC_PREFIX });
 };
 export default handleAuth({
   login: handleLogin({
     authorizationParams: {
       audience: process.env.AUTH0_AUDIENCE_URL, // or AUTH0_AUDIENCE
     },
+    returnTo: process.env.NEXT_PUBLIC_PREFIX
   }),
   logout: logoutCallback,
   callback: async (req, res) =>
