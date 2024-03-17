@@ -16,6 +16,7 @@ const afterCallback = async (req, res, session, _) => {
   } catch (error) {
     console.log("Something went wrong! with error: ", error);
   }
+  res.setHeader('Location', process.env.NEXT_PUBLIC_PREFIX);
   return session;
 };
 
