@@ -33,7 +33,7 @@ const logoutCallback = async (req, res) => {
   for (const cookieName in cookies) {
     res.setHeader('Set-Cookie', `${cookieName}=; Max-Age=0`);
   }
-  await handleLogout(req, res, { returnTo: process.env.NEXT_PUBLIC_PREFIX });
+  return await handleLogout(req, res, { returnTo: process.env.NEXT_PUBLIC_PREFIX });
 };
 export default handleAuth({
   login: handleLogin({
