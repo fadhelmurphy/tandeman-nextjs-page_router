@@ -19,8 +19,13 @@ const afterCallback = async (req, res, session, _) => {
   res.setHeader('Location', process.env.NEXT_PUBLIC_PREFIX);
   return session;
 };
+const logoutUrl = [
+  `${process.env.AUTH0_ISSUER_BASE_URL}/v2/logout?`,
+  `client_id=${process.env.AUTH0_CLIENT_ID}`,
+  `&returnTo=${process.env.AUTH0_BASE_URL}`,
+];
 
-const logoutCallback = async (req, res) => {
+const logoutCallback = handleLogout(async (req, res) => {
   try {
     const session = await getSession(req, res);
     let user = { ...(session?.user ?? null) };
@@ -29,20 +34,10 @@ const logoutCallback = async (req, res) => {
   } catch (error) {
     console.log("Something went wrong! with error: ", error);
   }  
-
-  // const cookies = req.cookies;
-  // for (const cookieName in cookies) {
-  //   res.setHeader('Set-Cookie', `${cookieName}=; Max-Age=0; Path=/;`);
-  // }
-
-    try {
-      await handleLogout(req, res, {
-        returnTo: process.env.NEXT_PUBLIC_PREFIX
-      });
-    } catch (error) {
-      console.error(error);
-    }
-};
+  return {
+    returnTo: logoutUrl.join('')
+  }
+});
 
 export default handleAuth({
   login: handleLogin({
