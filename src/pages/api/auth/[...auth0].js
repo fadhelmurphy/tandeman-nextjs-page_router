@@ -29,12 +29,15 @@ const logoutCallback = async (req, res) => {
   } catch (error) {
     console.log("Something went wrong! with error: ", error);
   }  
+
   const cookies = req.cookies;
   for (const cookieName in cookies) {
-    res.setHeader('Set-Cookie', `${cookieName}=; Max-Age=0`);
+    res.setHeader('Set-Cookie', `${cookieName}=; Max-Age=0; Path=/;`);
   }
+
   return await handleLogout(req, res, { returnTo: process.env.NEXT_PUBLIC_PREFIX });
 };
+
 export default handleAuth({
   login: handleLogin({
     authorizationParams: {
