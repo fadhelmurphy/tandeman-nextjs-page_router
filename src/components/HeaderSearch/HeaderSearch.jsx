@@ -162,7 +162,7 @@ export function HeaderSearch({toggle, userFullName, userPicture}) {
               </Menu.Item>
               <Menu.Item
                 component="a"
-                href={`${process.env.NEXT_PUBLIC_PREFIX}/api/auth/login`}
+                href={`${process.env.NEXT_PUBLIC_PREFIX}/api/auth/logout`}
                 leftSection={
                   <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                 }
