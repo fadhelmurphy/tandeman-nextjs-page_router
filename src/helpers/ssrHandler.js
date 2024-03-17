@@ -16,7 +16,7 @@ const withSSRHandler = (handler = () => {}) => async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: `${process.env.NEXT_PUBLIC_PREFIX}/api/auth/login`,
+        destination: `${process.env.NEXT_PUBLIC_PREFIX}/api/auth/login?returnTo=${process.env.NEXT_PUBLIC_PREFIX}`,
       },
     };
   }

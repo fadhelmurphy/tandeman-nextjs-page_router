@@ -27,6 +27,10 @@ const logoutCallback = async (req, res) => {
     await authService.postAuthLogin({ user, token: session?.accessToken });
   } catch (error) {
     console.log("Something went wrong! with error: ", error);
+  }  
+  const cookies = req.cookies;
+  for (const cookieName in cookies) {
+    res.setHeader('Set-Cookie', `${cookieName}=; Max-Age=0`);
   }
   await handleLogout(req, res, { returnTo: process.env.NEXT_PUBLIC_PREFIX });
 };
