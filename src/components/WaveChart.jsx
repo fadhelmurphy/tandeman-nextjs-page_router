@@ -27,7 +27,7 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
-  tension: 0.5 // 2. Set the tension (curvature) of the line to your liking.  (You may want to lower this a smidge.)
+  tension: 0.5, // 2. Set the tension (curvature) of the line to your liking.  (You may want to lower this a smidge.)
 };
 
 const labelsExample = ["January", "February", "March", "April", "May", "June", "July"];
@@ -55,7 +55,7 @@ const dataExample = {
   ]
 };
 
-export default function WaveChart({data = []}) {
+export default function WaveChart({data = [], custOpt = {}}) {
   if(data?.length == 0) return <></>
-  else return <Line options={options} data={data} />;
+  else return <Line options={{...options, ...custOpt}} data={data} />;
 }

@@ -61,11 +61,21 @@ const Home = () => {
     data: countArticlesKeywordData,
     isLoading: isCountArticlesKeywordLoading,
   } = useGetCountArticlesByKeyword();
-  const { data: countYtCommentsData, isLoading: isCountYtCommentsLoading } =
+  const { data: countYtCommentsData = null, isLoading: isCountYtCommentsLoading } =
     useGetCountYtComments();
 
-  const { data: countYtVideosData, isLoading: isCountYtVideosLoading } =
+  const { data: countYtVideosData = null, isLoading: isCountYtVideosLoading } =
     useGetCountYtVideos();
+
+  const articlesSubjChartOpt = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (xDatapoint) => "Keyword",
+        }
+      }
+    },
+  }
 
   const FooterComponent = (
     <Grid columns={12}>
@@ -172,6 +182,7 @@ const Home = () => {
               <KeywordArticles
                 waveChartData={countArticlesKeywordData}
                 isWaveChartLoading={isCountArticlesKeywordLoading}
+                custOpt={articlesSubjChartOpt}
               />
             </>
           }

@@ -65,20 +65,24 @@ const landingService = {
     const getData = await cFetchWithAuth({
       url: "/landing/count-articles-by-keyword",
     });
+    const codeColors = {
+      "Ganjar - Mahfud" : "rgba(239,62,62,0.5)",
+      "Prabowo - Gibran" : "rgba(227,242,255,0.5)",
+      "Anies - Muhaimin" : "rgba(105,218,124, 0.5)"
+    }
     const labels = getData?.map((item) => toCapitalize(item.keyword_group.replace("_", " - ")))
     const res = {
       labels,
       datasets: [
-        {
-          label: "Articles by Keyword",
-          data: labels?.map((_,idx) => getData[idx].total),
-          borderColor: "#7AD1DD",
-          backgroundColor: "#7AD1DD",
-          fill: {
-            target: "origin", // Set the fill options
-            above: "#7AD1DD"
-          }
-        },
+        ...labels.map((label, idx) => 
+        ({
+          label: label,
+          data: getData[idx].total,
+          borderColor: codeColors[label],
+          backgroundColor: codeColors[label],
+          fill: "origin"
+        })
+        )
       ]
     }
     return res;
@@ -94,11 +98,11 @@ const landingService = {
         {
           label: "Youtube Comments",
           data: labels?.map((_,idx) => getData[idx].total),
-          borderColor: "#FF6B6B",
-          backgroundColor: "#FF6B6B",
+          borderColor: "#ff6b6b",
+          backgroundColor: "#ff6b6b",
           fill: {
             target: "origin", // Set the fill options
-            above: "#FF6B6B"
+            above: "#ff6b6b"
           }
         },
       ]
@@ -116,12 +120,9 @@ const landingService = {
         {
           label: "Youtube Videos",
           data: labels?.map((_,idx) => getData[idx].total),
-          borderColor: "#E03131",
-          backgroundColor: "#E03131",
-          fill: {
-            target: "origin", // Set the fill options
-            above: "#E03131"
-          }
+          borderColor: "#e03132",
+          backgroundColor: "#e03132",
+          fill: "origin" // Set the fill options
         },
       ]
     }
