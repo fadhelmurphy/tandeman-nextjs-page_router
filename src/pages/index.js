@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import DashboardLayout from "@/containers/layout/dashboard";
 import {
   useGetAllKeywords,
+  useGetAuthor,
   useGetClusterExtraction,
   useGetCountArticlesByAcquire,
   useGetCountArticlesByDate,
@@ -10,6 +11,7 @@ import {
   useGetCountYtComments,
   useGetCountYtVideos,
   useGetMediaCount,
+  useGetMetadata,
   useGetSentiment,
 } from "@/hooks/landing-hook";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
@@ -50,9 +52,32 @@ const Home = () => {
   const {
     data: clusterExtractionData,
     isLoading: isClusterExtractionLoading,
-    fetchNextPage,
-    fetchPreviousPage,
+    fetchNextPage: fetchClusterNextPage,
+    hasNextPage: hasClusterNextPage,
+    isFetchingNextPage: isFetchingClusterNextPage,
+    isFetching: isFetchingCluster,
+    isError: isErrorCluster,
   } = useGetClusterExtraction({ page: 1 });
+
+  const {
+    data: metadataData,
+    isLoading: isMetadataLoading,
+    fetchNextPage: fetchMetadataNextPage,
+    hasNextPage: hasMetadataNextPage,
+    isFetchingNextPage: isFetchingMetadataNextPage,
+    isFetching: isFetchingMetadata,
+    isError: isErrorMetadata,
+  } = useGetMetadata({ page: 1 });
+
+  const {
+    data: authorData,
+    isLoading: isAuthorLoading,
+    fetchNextPage: fetchAuthorNextPage,
+    hasNextPage: hasAuthorNextPage,
+    isFetchingNextPage: isFetchingAuthorNextPage,
+    isFetching: isFetchingAuthor,
+    isError: isErrorAuthor,
+  } = useGetAuthor({ page: 1 });
   const { data: countArticlesData, isLoading: isCountArticlesLoading } =
     useGetCountArticlesByAcquire();
   const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading } =
@@ -61,8 +86,10 @@ const Home = () => {
     data: countArticlesKeywordData,
     isLoading: isCountArticlesKeywordLoading,
   } = useGetCountArticlesByKeyword();
-  const { data: countYtCommentsData = null, isLoading: isCountYtCommentsLoading } =
-    useGetCountYtComments();
+  const {
+    data: countYtCommentsData = null,
+    isLoading: isCountYtCommentsLoading,
+  } = useGetCountYtComments();
 
   const { data: countYtVideosData = null, isLoading: isCountYtVideosLoading } =
     useGetCountYtVideos();
@@ -72,10 +99,10 @@ const Home = () => {
       tooltip: {
         callbacks: {
           title: (xDatapoint) => "Keyword",
-        }
-      }
+        },
+      },
     },
-  }
+  };
 
   const FooterComponent = (
     <Grid columns={12}>
@@ -166,9 +193,15 @@ const Home = () => {
           }
           ChildrenRight={
             <ClusterExtraction
-              data={clusterExtractionData?.pages}
-              isLoading={isClusterExtractionLoading}
-              fetchNextPage={fetchNextPage}
+              {...{
+                data: clusterExtractionData?.pages,
+                isLoading: isClusterExtractionLoading,
+                fetchNextPage: fetchClusterNextPage,
+                hasNextPage: hasClusterNextPage,
+                isFetchingNextPage: isFetchingClusterNextPage,
+                isFetching: isFetchingCluster,
+                isError: isErrorCluster,
+              }}
             />
           }
         />
@@ -219,12 +252,10 @@ const Home = () => {
         <TwoColumnsGrid
           leftTitle="Processing Task [Not Integrated]"
           rightTitle={[
-            "Metadata Collection [Not Integrated]",
-            "News Authors [Not Integrated]",
+            "Metadata Collection",
+            "News Authors",
             "Topic Issued by Author [Not Integrated]",
           ]}
-          rightDropdownText={[sentimentFilter.toUpperCase()]}
-          rightDataDropdown={[filterSentimentData]}
           ChildrenLeft={
             <ProcessingTask
               data={sentimentData}
@@ -233,8 +264,28 @@ const Home = () => {
           }
           ChildrenRight={
             <>
-              <MetaDataLists />
-              <Authors />
+              <MetaDataLists
+                {...{
+                  data: metadataData?.pages,
+                  isLoading: isMetadataLoading,
+                  fetchNextPage: fetchMetadataNextPage,
+                  hasNextPage: hasMetadataNextPage,
+                  isFetchingNextPage: isFetchingMetadataNextPage,
+                  isFetching: isFetchingMetadata,
+                  isError: isErrorMetadata,
+                }}
+              />
+              <Authors 
+              {...{
+                data: authorData?.pages,
+                isLoading: isAuthorLoading,
+                fetchNextPage: fetchAuthorNextPage,
+                hasNextPage: hasAuthorNextPage,
+                isFetchingNextPage: isFetchingAuthorNextPage,
+                isFetching: isFetchingAuthor,
+                isError: isErrorAuthor,
+              }}
+              />
               <TopIssuesAuthors />
             </>
           }

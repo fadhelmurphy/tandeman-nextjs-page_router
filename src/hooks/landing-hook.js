@@ -2,6 +2,7 @@ import { COUNTARTICLESBYACQUIRE, COUNTARTICLESBYDATE, COUNTARTICLESBYKEYWORD } f
 import { CLUSTEREXTRACTIONQUERYKEY } from "@/query/keys/cluster-extraction";
 import { KEYWORDSQUERYKEY } from "@/query/keys/keywords";
 import { MEDIACOUNTQUERYKEY } from "@/query/keys/media-count";
+import { AUTHORQUERYKEY, METADATAQUERYKEY } from "@/query/keys/metadata";
 import { SENTIMENTQUERYKEY } from "@/query/keys/sentiment";
 import { COUNTYOUTUBECOMMENTS, COUNTYOUTUBEVIDEOS } from "@/query/keys/youtube";
 import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from "react-query";
@@ -31,7 +32,7 @@ const useGetSentiment = (params) => {
 const useGetClusterExtraction = (query) => {
   return useInfiniteQuery({
     queryKey:[CLUSTEREXTRACTIONQUERYKEY, query],
-    queryFn: ({ pageParam = 1 }) => landingService.getClusterExtraction({page: pageParam, limit: 4}),
+    queryFn: ({ pageParam = 1 }) => landingService.getClusterExtraction({page: pageParam, limit: 3}),
     getNextPageParam(lastPage, allPages) {
       return lastPage.length > 0 ? allPages.length + 1 : undefined;
     },
@@ -73,6 +74,27 @@ const useGetCountYtVideos = () => {
   });
 };
 
+const useGetMetadata = (query) => {
+  return useInfiniteQuery({
+    queryKey:[METADATAQUERYKEY, query],
+    queryFn: ({ pageParam = 1 }) => landingService.getMetadata({page: pageParam, limit: 3}),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+    },
+  });
+};
+
+
+const useGetAuthor = (query) => {
+  return useInfiniteQuery({
+    queryKey:[AUTHORQUERYKEY, query],
+    queryFn: ({ pageParam = 1 }) => landingService.getAuthor({page: pageParam, limit: 3}),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+    },
+  });
+};
+
 export {
   useGetAllKeywords,
   useGetMediaCount,
@@ -82,5 +104,7 @@ export {
   useGetCountArticlesByDate,
   useGetCountArticlesByKeyword,
   useGetCountYtComments,
-  useGetCountYtVideos
+  useGetCountYtVideos,
+  useGetMetadata,
+  useGetAuthor
 };

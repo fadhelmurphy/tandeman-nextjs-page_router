@@ -59,3 +59,23 @@ export const toCapitalize = (text) => {
 
   return capitalizedText;
 }
+
+export const formatCompactNumber = (number) => {
+  // Check if the number is valid
+  if (isNaN(number)) return 'Invalid number';
+  
+  // Define the units
+  const units = ['K', 'M', 'B', 'T', 'Q'];
+  
+  // Initialize index for units array
+  let unitIndex = 0;
+
+  // While the number is larger than or equal to 1000 and there are more units to use
+  while (number >= 1000 && unitIndex < units.length - 1) {
+      number /= 1000;
+      unitIndex++;
+  }
+
+  // Format the number with the appropriate unit
+  return number.toLocaleString(undefined, { maximumFractionDigits: 1 }) + units[unitIndex];
+}

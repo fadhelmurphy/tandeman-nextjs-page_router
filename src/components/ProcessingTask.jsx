@@ -2,10 +2,47 @@ import React from "react";
 import { Text, Avatar, Container, Progress, Grid } from "@mantine/core";
 import LoadComponent from "./LoadingComponent";
 
+const data = [
+  {
+    task: "Articles text cleaning process",
+    percentage: 80,
+    total: "2,100"
+  },
+
+  {
+    task: "Counting important phrases",
+    percentage: 70,
+    total: "1,880"
+  },
+
+  {
+    task: "Deciding opinions tone",
+    percentage: 60,
+    total: "1,521"
+  },
+
+  {
+    task: "Finding opinions' emotional pattern",
+    percentage: 50,
+    total: "884"
+  },
+
+  {
+    task: "Finding useful entities",
+    percentage: 40,
+    total: "473"
+  },
+
+  {
+    task: "Squeezing data and get the summary",
+    percentage: 30,
+    total: "418"
+  }
+]
+
 export default function ProcessingTask({
-  data = [],
+  // data = [],
   isLoading = false,
-  FooterComponent,
 }) {
   return (
     <LoadComponent isLoading={isLoading}>
@@ -36,7 +73,7 @@ export default function ProcessingTask({
                 gridTemplateColumns: "repeat(2,1fr)"
               }}>
               <Text size="xs" fw="bold" component="h3" mb="0.5rem">
-                {item.keyword_group.replace(/_/g, " - ")}
+                {item.task}
               </Text>
               <Text size="xs" color="grey" ta="right" component="p" mb="0.5rem">
                 {item.total}
@@ -45,7 +82,7 @@ export default function ProcessingTask({
                 <Progress.Root size="sm" className="column">
                   <Progress.Section
                     color="blue"
-                    value={item.positive_percentage}
+                    value={item.percentage}
                   ></Progress.Section>
                 </Progress.Root>
             </div>

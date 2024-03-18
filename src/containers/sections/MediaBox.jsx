@@ -4,7 +4,8 @@ import { IconArrowUpRight, IconArrowDownRight, IconArticle, IconBrandYoutube, Ic
 
 const iconList = {
     media: IconArticle,
-    youtube: IconBrandYoutube,
+    "youtube comments": IconBrandYoutube,
+    "youtube videos": IconBrandYoutube,
     twitter: IconBrandTwitter,
     news: IconNews
 }
@@ -14,7 +15,7 @@ export default function SectionMediaBox({data, isLoading}) {
     const Icon = iconList[stat.platform] || IconArticle
     return (
       <Paper radius="md" shadow='md' key={idx}>
-        <Group>
+        <Group gap={5}>
         <div className="MediaBox__StatsIcon">
           <Icon
             color="white"
@@ -50,7 +51,7 @@ export default function SectionMediaBox({data, isLoading}) {
     );
   });
 
-  return <SimpleGrid spacing="xl" cols={{ base: 1, sm: 4 }} my="xl">
+  return <SimpleGrid cols={{ base: 1, sm: 5 }} my="xl">
     <LoadComponent isLoading={isLoading}>
       {stats}
     </LoadComponent>
