@@ -8,13 +8,15 @@ import { COUNTYOUTUBECOMMENTS, COUNTYOUTUBEVIDEOS } from "@/query/keys/youtube";
 import { useQuery, useQueryClient, useMutation, useInfiniteQuery } from "react-query";
 import landingService from "Services/landing-service";
 
-const useGetAllKeywords = () => {
-  return useQuery({
-    queryKey:[KEYWORDSQUERYKEY],
-    queryFn: () => landingService.getAllKeywords(),
+const useGetAllKeywords = (query) => {
+  return useInfiniteQuery({
+    queryKey:[KEYWORDSQUERYKEY, query],
+    queryFn: ({ pageParam = 1 }) => landingService.getAllKeywords({page: pageParam, limit: 10}),
+    getNextPageParam(lastPage, allPages) {
+      return lastPage?.length > 0 ? allPages?.length + 1 : undefined;
+    },
   });
 };
-
 const useGetMediaCount = () => {
   return useQuery({
     queryKey:[MEDIACOUNTQUERYKEY],
@@ -88,7 +90,7 @@ const useGetMetadata = (query) => {
 const useGetAuthor = (query) => {
   return useInfiniteQuery({
     queryKey:[AUTHORQUERYKEY, query],
-    queryFn: ({ pageParam = 1 }) => landingService.getAuthor({page: pageParam, limit: 3}),
+    queryFn: ({ pageParam = 1 }) => landingService.getAuthor({page: pageParam, limit: 4}),
     getNextPageParam(lastPage, allPages) {
       return lastPage.length > 0 ? allPages.length + 1 : undefined;
     },

@@ -53,17 +53,6 @@ export default function NewsAuthors({
               : "No more data"}
           </Button></div>
         )}
-        <style jsx>
-          {`
-            .avatar-card {
-              padding: 1rem;
-              flex: 0 0 225px;
-              align-items: center;
-              display: flex;
-              flex-direction: column;
-            }
-          `}
-        </style>
       </Container>
     </LoadComponent>
   );

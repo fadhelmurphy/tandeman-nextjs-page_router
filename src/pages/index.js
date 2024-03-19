@@ -38,8 +38,15 @@ import KeywordArticles from "@/components/KeywordArticles";
 const Home = () => {
   const [sentimentFilter, setSentimentFilter] = useState("week");
   const [articlesFilter, setArticlesFilter] = useState("week");
-  const { data: allKeywordsData, isLoading: isAllKeywordsLoading } =
-    useGetAllKeywords();
+  const {
+    data: allKeywordsData,
+    isLoading: isAllKeywordsLoading,
+    fetchNextPage: fetchAllKeywordsNextPage,
+    hasNextPage: hasAllKeywordsNextPage,
+    isFetchingNextPage: isFetchingAllKeywordsNextPage,
+    isFetching: isFetchingAllKeywords,
+    isError: isErrorAllKeywords,
+  } = useGetAllKeywords({ page: 1 });
   const { data: mediaCountData, isLoading: isMediaCntLoading } =
     useGetMediaCount();
   const { data: sentimentData, isLoading: isSentimentLoading } =
@@ -174,7 +181,16 @@ const Home = () => {
     <>
       <DashboardLayout>
         <SectionBox title="Keywords" isLoading={isAllKeywordsLoading}>
-          <KeywordsLists data={allKeywordsData} />
+          <KeywordsLists
+              {...{
+                data: allKeywordsData?.pages,
+                isLoading: isAllKeywordsLoading,
+                fetchNextPage: fetchAllKeywordsNextPage,
+                hasNextPage: hasAllKeywordsNextPage,
+                isFetchingNextPage: isFetchingAllKeywordsNextPage,
+                isFetching: isFetchingAllKeywords,
+                isError: isErrorAllKeywords,
+              }}/>
         </SectionBox>
         <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} />
         <RightSidebarGrid

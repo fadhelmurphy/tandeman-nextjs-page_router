@@ -1,7 +1,7 @@
 import { formatCompactNumber, toCapitalize } from "@/helpers/utils";
 import { cFetchWithAuth } from "Helpers/fetch";
 const landingService = {
-  getAllKeywords: () => cFetchWithAuth({ url: "/landing/keywords" }),
+  getAllKeywords: (params) => cFetchWithAuth({ url: "/landing/keywords", qParams: params }),
   getMediaCount: async () => {
     const getData = await cFetchWithAuth({ url: "/landing/media-count" });
     return getData.map((item) => {
