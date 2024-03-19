@@ -8,15 +8,17 @@ export default function StatisticsArticle({
   waveChartData = [],
   isAcquireLoading = false,
   isWaveChartLoading = false,
+  isAcquireError = false,
+  isWaveChartError = false
 }) {
   return (
     <>
-      <LoadComponent isLoading={isWaveChartLoading}>
+      <LoadComponent isLoading={isWaveChartLoading} isError={isWaveChartError}>
         <Container p="xl">
           <WaveChart data={waveChartData} />
         </Container>
       </LoadComponent>
-      <LoadComponent isLoading={isAcquireLoading}>
+      <LoadComponent isLoading={isAcquireLoading} isError={isAcquireError}>
         <Grid columns={12} pb="xl">
           {acquireData?.map((item, idx) => (
             <Grid.Col span={4} key={idx}>

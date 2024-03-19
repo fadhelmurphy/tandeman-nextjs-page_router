@@ -49,7 +49,7 @@ const Home = () => {
   } = useGetAllKeywords({ page: 1 });
   const { data: mediaCountData, isLoading: isMediaCntLoading } =
     useGetMediaCount();
-  const { data: sentimentData, isLoading: isSentimentLoading } =
+  const { data: sentimentData, isLoading: isSentimentLoading, isError: isSentimentError } =
     useGetSentiment({
       limit: 10,
       page: 1,
@@ -85,20 +85,22 @@ const Home = () => {
     isFetching: isFetchingAuthor,
     isError: isErrorAuthor,
   } = useGetAuthor({ page: 1 });
-  const { data: countArticlesData, isLoading: isCountArticlesLoading } =
+  const { data: countArticlesData, isLoading: isCountArticlesLoading, isError: isCountArticlesError } =
     useGetCountArticlesByAcquire();
-  const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading } =
+  const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading, isError: isCountArticlesDateError } =
     useGetCountArticlesByDate(articlesFilter);
   const {
     data: countArticlesKeywordData,
     isLoading: isCountArticlesKeywordLoading,
+    isError: isCountArticlesKeywordError
   } = useGetCountArticlesByKeyword();
   const {
     data: countYtCommentsData = null,
     isLoading: isCountYtCommentsLoading,
+    isError: isCountYtCommentsError
   } = useGetCountYtComments();
 
-  const { data: countYtVideosData = null, isLoading: isCountYtVideosLoading } =
+  const { data: countYtVideosData = null, isLoading: isCountYtVideosLoading, isError: isCountYtVideosError } =
     useGetCountYtVideos();
 
   const articlesSubjChartOpt = {
@@ -205,6 +207,8 @@ const Home = () => {
               isAcquireLoading={isCountArticlesLoading}
               acquireData={countArticlesData}
               waveChartData={countArticlesDateData}
+              isAcquireError={isCountArticlesDateError}
+              isWaveChartError={isCountArticlesError}
             />
           }
           ChildrenRight={
@@ -231,6 +235,7 @@ const Home = () => {
               <KeywordArticles
                 waveChartData={countArticlesKeywordData}
                 isWaveChartLoading={isCountArticlesKeywordLoading}
+                isWaveChartError={isCountArticlesKeywordError}
                 custOpt={articlesSubjChartOpt}
               />
             </>
@@ -240,6 +245,7 @@ const Home = () => {
               <HorizontalBarChart
                 data={sentimentData}
                 isLoading={isSentimentLoading}
+                isError={isSentimentError}
                 FooterComponent={FooterComponent}
               />
             </>
@@ -253,6 +259,7 @@ const Home = () => {
               <KeywordArticles
                 waveChartData={countYtVideosData}
                 isWaveChartLoading={isCountYtVideosLoading}
+                isWaveChartError={isCountYtVideosError}
               />
             </>
           }
@@ -261,6 +268,7 @@ const Home = () => {
               <KeywordArticles
                 waveChartData={countYtCommentsData}
                 isWaveChartLoading={isCountYtCommentsLoading}
+                isWaveChartError={isCountYtCommentsError}
               />
             </>
           }
@@ -274,8 +282,6 @@ const Home = () => {
           ]}
           ChildrenLeft={
             <ProcessingTask
-              data={sentimentData}
-              isLoading={isSentimentLoading}
             />
           }
           ChildrenRight={

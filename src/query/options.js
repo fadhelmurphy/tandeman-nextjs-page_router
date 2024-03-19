@@ -1,6 +1,6 @@
 export const defaultOptions = {
     queries: {
-      retry: 3,
+      retry: 2,
       refetchOnReconnect: 'always',
       refetchOnWindowFocus: false,
       refetchOnMount: false,

@@ -6,11 +6,12 @@ import LoadComponent from "./LoadingComponent";
 export default function KeywordArticles({
   waveChartData = [],
   isWaveChartLoading = false,
-  custOpt = {}
+  custOpt = {},
+  isWaveChartError = false
 }) {
   return (
     <>
-      <LoadComponent isLoading={isWaveChartLoading}>
+      <LoadComponent isLoading={isWaveChartLoading} isError={isWaveChartError}>
         <Container p="xl">
           <WaveChart 
           data={waveChartData} 
