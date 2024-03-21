@@ -17,10 +17,10 @@ const landingService = {
     const get = await cFetchWithAuth({
       url: "/landing/count-articles-by-acquire",
     });
-    const res = Object.keys(get).map((key) => ({
+    const res = get ? Object.keys(get).map((key) => ({
       title: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " "),
       value: formatCompactNumber(parseInt(get[key])),
-    }));
+    })) : [];
     return res;
   },
   getCountArticlesByMonth: async () => {
@@ -84,7 +84,7 @@ const landingService = {
       datasets: [
         ...Object.keys(codeColors).map((label, idx) => ({
           label: label,
-          data: getData[idx].total,
+          data: getData ? getData[idx].total : 0,
           borderColor: codeColors[label],
           backgroundColor: codeColors[label],
           fill: "origin",
@@ -139,11 +139,11 @@ const landingService = {
       url: "/landing/metadata",
       qParams: params,
     });
-    const res = getData.map((item) => ({
+    const res = getData?.length ? getData.map((item) => ({
       ...item,
       author: toCapitalize(item.author),
       tags: toCapitalize(item.tags),
-    }));
+    })) : [];
     return res;
   },
   getAuthor: (params) =>

@@ -10,7 +10,7 @@ export default function NewsAuthors({
   isError = false,
 }) {
   return (
-    <LoadComponent isLoading={isLoading} isError={isError}>
+    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length}>
       <Container
         pb="lg"
         px="lg"
@@ -22,7 +22,7 @@ export default function NewsAuthors({
         }}
       >
         {data?.map((page) =>
-          page.map((item, idx) => {
+          page?.map((item, idx) => {
             return (
               <Tooltip label={item.author} withArrow key={idx}>
                 <Avatar size={130} radius={130} />

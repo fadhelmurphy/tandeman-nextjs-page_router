@@ -47,7 +47,7 @@ const Home = () => {
     isFetching: isFetchingAllKeywords,
     isError: isErrorAllKeywords,
   } = useGetAllKeywords({ page: 1 });
-  const { data: mediaCountData, isLoading: isMediaCntLoading } =
+  const { data: mediaCountData, isLoading: isMediaCntLoading, isError: isMediaCntError } =
     useGetMediaCount();
   const { data: sentimentData, isLoading: isSentimentLoading, isError: isSentimentError } =
     useGetSentiment({
@@ -194,7 +194,7 @@ const Home = () => {
                 isError: isErrorAllKeywords,
               }}/>
         </SectionBox>
-        <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} />
+        <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} isError={isMediaCntError} />
         <RightSidebarGrid
           leftTitle="Statistics Articles Acquirement"
           rightTitle="Clusters Extraction"

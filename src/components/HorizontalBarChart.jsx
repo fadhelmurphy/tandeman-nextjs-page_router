@@ -10,7 +10,7 @@ export default function HorizontalBarChart({
   isError = false
 }) {
   return (
-    <LoadComponent isLoading={isLoading} isError={isError}>
+    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={!data}>
       <Container
         style={{
           padding: "25px 25px",

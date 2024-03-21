@@ -36,7 +36,7 @@ const useGetClusterExtraction = (query) => {
     queryKey:[CLUSTEREXTRACTIONQUERYKEY, query],
     queryFn: ({ pageParam = 1 }) => landingService.getClusterExtraction({page: pageParam, limit: 3}),
     getNextPageParam(lastPage, allPages) {
-      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+      return lastPage?.length > 0 ? allPages.length + 1 : undefined;
     },
   });
 };
@@ -55,9 +55,9 @@ const useGetCountArticlesByDate = (params) => {
   });
 };
 
-const useGetCountArticlesByKeyword = (params) => {
+const useGetCountArticlesByKeyword = () => {
   return useQuery({
-    queryKey:[COUNTARTICLESBYKEYWORD, params],
+    queryKey:[COUNTARTICLESBYKEYWORD],
     queryFn: () => landingService.getCountArticlesByKeyword(),
   });
 };
@@ -81,7 +81,7 @@ const useGetMetadata = (query) => {
     queryKey:[METADATAQUERYKEY, query],
     queryFn: ({ pageParam = 1 }) => landingService.getMetadata({page: pageParam, limit: 3}),
     getNextPageParam(lastPage, allPages) {
-      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+      return lastPage?.length > 0 ? allPages.length + 1 : undefined;
     },
   });
 };
@@ -92,7 +92,7 @@ const useGetAuthor = (query) => {
     queryKey:[AUTHORQUERYKEY, query],
     queryFn: ({ pageParam = 1 }) => landingService.getAuthor({page: pageParam, limit: 4}),
     getNextPageParam(lastPage, allPages) {
-      return lastPage.length > 0 ? allPages.length + 1 : undefined;
+      return lastPage?.length > 0 ? allPages.length + 1 : undefined;
     },
   });
 };

@@ -12,7 +12,7 @@ export default function ClusterExtraction({
 }) {
   return (
     <>
-      <LoadComponent isLoading={isLoading} isError={isError}>
+      <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length}>
         <Container
           px="lg"
           style={{
@@ -23,7 +23,7 @@ export default function ClusterExtraction({
           {data?.map((page, index) => {
             return (
               <div key={index}>
-                {page.map((item, idx) => (
+                {page?.map((item, idx) => (
                   <div
                     key={idx}
                     style={{
