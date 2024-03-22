@@ -3,17 +3,18 @@ import {Button, Paper} from "@mantine/core"
 import LoadComponent from '@/components/LoadingComponent'
 
 export default function SectionBox({
-  title = "Section Title", 
+  title = "Section Title" || <></>, 
   isLoading = false, 
   children,
   RightButtonComponent = <></>,
 }) {
 
+  const isTitleString = typeof title === "string"
   return (
     <>
     <Paper className="SectionBox" shadow="md" mb="xl">
         <div className="SectionBox__header">
-          <h4>{title}</h4>
+          {isTitleString ? (<h4>{title}</h4>) : title}
           {RightButtonComponent}
         </div>
         <div className="SectionBox__body">

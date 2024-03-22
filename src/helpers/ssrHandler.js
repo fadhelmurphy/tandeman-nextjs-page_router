@@ -2,6 +2,7 @@
 import { QueryClient } from "react-query";
 import { dehydrate } from "react-query/hydration";
 import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
+import Cookies from "cookies";
 
 const withSSRHandler = (handler = () => {}) => async (context) => {
   const queryClient = new QueryClient();
@@ -11,12 +12,14 @@ const withSSRHandler = (handler = () => {}) => async (context) => {
     context.req,
     context.res
   );
-  if (!token) {
+  const cookies = new Cookies(context.req, context.res)
+  const getProjectName = cookies.get('project_name') ?? null
+  if (!token || !getProjectName) {
     // Tidak ada header Authorization, mungkin perlu memberikan respons 401 Unauthorized
     return {
       redirect: {
         permanent: false,
-        destination: `${process.env.NEXT_PUBLIC_PREFIX}/api/auth/login?returnTo=${process.env.NEXT_PUBLIC_PREFIX}`,
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login?returnTo=${process.env.NEXT_PUBLIC_PREFIX}`,
       },
     };
   }
@@ -34,6 +37,7 @@ const withSSRHandler = (handler = () => {}) => async (context) => {
       userData: {
         user,
         token,
+        project_name: getProjectName
       },
     },
   };

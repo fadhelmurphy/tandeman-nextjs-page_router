@@ -8,6 +8,7 @@ import { useGlobalUserStore } from "@/stores/user-store";
 function CalendarLayout({ children, title = "Dashboard" }) {
   const [opened, { toggle }] = useDisclosure(true);
   const getUser = useGlobalUserStore((state) => state.user);
+  const getProjectName = useGlobalUserStore((state) => state.project_name);
 
   return (
     <AppShell
@@ -39,6 +40,7 @@ function CalendarLayout({ children, title = "Dashboard" }) {
             toggle,
             userFullName: getUser?.name,
             userPicture: getUser?.picture,
+            userProject: getProjectName
           }}
         />
       </AppShell.Header>

@@ -34,6 +34,9 @@ import Authors from "@/components/NewsAuthors";
 import TopIssuesAuthors from "@/components/TopIssuesAuthors";
 import MetaDataLists from "@/components/MetaDataLists";
 import KeywordArticles from "@/components/KeywordArticles";
+import AvatarLists from "@/components/AvatarLists";
+import ScatterPlot from "@/components/ScatterPlot";
+import { dummyViz } from "@/helpers/viz";
 
 const Home = () => {
   const [sentimentFilter, setSentimentFilter] = useState("week");
@@ -47,15 +50,21 @@ const Home = () => {
     isFetching: isFetchingAllKeywords,
     isError: isErrorAllKeywords,
   } = useGetAllKeywords({ page: 1 });
-  const { data: mediaCountData, isLoading: isMediaCntLoading, isError: isMediaCntError } =
-    useGetMediaCount();
-  const { data: sentimentData, isLoading: isSentimentLoading, isError: isSentimentError } =
-    useGetSentiment({
-      limit: 10,
-      page: 1,
-      date: getCurrDate(),
-      filter_by: sentimentFilter,
-    });
+  const {
+    data: mediaCountData,
+    isLoading: isMediaCntLoading,
+    isError: isMediaCntError,
+  } = useGetMediaCount();
+  const {
+    data: sentimentData,
+    isLoading: isSentimentLoading,
+    isError: isSentimentError,
+  } = useGetSentiment({
+    limit: 10,
+    page: 1,
+    date: getCurrDate(),
+    filter_by: sentimentFilter,
+  });
   const {
     data: clusterExtractionData,
     isLoading: isClusterExtractionLoading,
@@ -85,23 +94,32 @@ const Home = () => {
     isFetching: isFetchingAuthor,
     isError: isErrorAuthor,
   } = useGetAuthor({ page: 1 });
-  const { data: countArticlesData, isLoading: isCountArticlesLoading, isError: isCountArticlesError } =
-    useGetCountArticlesByAcquire();
-  const { data: countArticlesDateData, isLoading: isCountArticlesDateLoading, isError: isCountArticlesDateError } =
-    useGetCountArticlesByDate(articlesFilter);
+  const {
+    data: countArticlesData,
+    isLoading: isCountArticlesLoading,
+    isError: isCountArticlesError,
+  } = useGetCountArticlesByAcquire();
+  const {
+    data: countArticlesDateData,
+    isLoading: isCountArticlesDateLoading,
+    isError: isCountArticlesDateError,
+  } = useGetCountArticlesByDate(articlesFilter);
   const {
     data: countArticlesKeywordData,
     isLoading: isCountArticlesKeywordLoading,
-    isError: isCountArticlesKeywordError
+    isError: isCountArticlesKeywordError,
   } = useGetCountArticlesByKeyword();
   const {
     data: countYtCommentsData = null,
     isLoading: isCountYtCommentsLoading,
-    isError: isCountYtCommentsError
+    isError: isCountYtCommentsError,
   } = useGetCountYtComments();
 
-  const { data: countYtVideosData = null, isLoading: isCountYtVideosLoading, isError: isCountYtVideosError } =
-    useGetCountYtVideos();
+  const {
+    data: countYtVideosData = null,
+    isLoading: isCountYtVideosLoading,
+    isError: isCountYtVideosError,
+  } = useGetCountYtVideos();
 
   const articlesSubjChartOpt = {
     plugins: {
@@ -112,6 +130,33 @@ const Home = () => {
       },
     },
   };
+  
+  const dummyScatter = useMemo(() => {
+    const resDummyScatter = [
+      {
+        authors: [
+          { nama: "Prabowo", picture: undefined },
+          { nama: "Ghibran", picture: undefined },
+        ],
+      },
+      {
+        authors: [
+          { nama: "Anies", picture: undefined },
+          { nama: "Muhaimin", picture: undefined },
+        ],
+      },
+      {
+        authors: [
+          { nama: "Ganjar", picture: undefined },
+          { nama: "Mahfud", picture: undefined },
+        ],
+      },
+    ].map((item) => ({
+      ...item,
+      scatterData: dummyViz(item.authors)
+    }))
+    return resDummyScatter
+  }, [])
 
   const FooterComponent = (
     <Grid columns={12}>
@@ -184,17 +229,22 @@ const Home = () => {
       <DashboardLayout>
         <SectionBox title="Keywords" isLoading={isAllKeywordsLoading}>
           <KeywordsLists
-              {...{
-                data: allKeywordsData?.pages,
-                isLoading: isAllKeywordsLoading,
-                fetchNextPage: fetchAllKeywordsNextPage,
-                hasNextPage: hasAllKeywordsNextPage,
-                isFetchingNextPage: isFetchingAllKeywordsNextPage,
-                isFetching: isFetchingAllKeywords,
-                isError: isErrorAllKeywords,
-              }}/>
+            {...{
+              data: allKeywordsData?.pages,
+              isLoading: isAllKeywordsLoading,
+              fetchNextPage: fetchAllKeywordsNextPage,
+              hasNextPage: hasAllKeywordsNextPage,
+              isFetchingNextPage: isFetchingAllKeywordsNextPage,
+              isFetching: isFetchingAllKeywords,
+              isError: isErrorAllKeywords,
+            }}
+          />
         </SectionBox>
-        <SectionMediaBox data={mediaCountData} isLoading={isMediaCntLoading} isError={isMediaCntError} />
+        <SectionMediaBox
+          data={mediaCountData}
+          isLoading={isMediaCntLoading}
+          isError={isMediaCntError}
+        />
         <RightSidebarGrid
           leftTitle="Statistics Articles Acquirement"
           rightTitle="Clusters Extraction"
@@ -274,15 +324,24 @@ const Home = () => {
           }
         />
         <TwoColumnsGrid
-          leftTitle="Processing Task [Not Integrated]"
+          leftTitle={[
+            "Processing Task",
+            ...dummyScatter.map((item, idx) => (
+              <AvatarLists data={item.authors} key={idx} />
+            )),
+          ]}
           rightTitle={[
             "Metadata Collection",
             "News Authors",
-            "Topic Issued by Author [Not Integrated]",
+            "Topic Issued by Author",
           ]}
           ChildrenLeft={
-            <ProcessingTask
-            />
+            <>
+              <ProcessingTask />
+              {...dummyScatter.map((item, idx) => (
+                <ScatterPlot data={item.scatterData} key={idx} />
+              ))}
+            </>
           }
           ChildrenRight={
             <>
@@ -297,16 +356,16 @@ const Home = () => {
                   isError: isErrorMetadata,
                 }}
               />
-              <Authors 
-              {...{
-                data: authorData?.pages,
-                isLoading: isAuthorLoading,
-                fetchNextPage: fetchAuthorNextPage,
-                hasNextPage: hasAuthorNextPage,
-                isFetchingNextPage: isFetchingAuthorNextPage,
-                isFetching: isFetchingAuthor,
-                isError: isErrorAuthor,
-              }}
+              <Authors
+                {...{
+                  data: authorData?.pages,
+                  isLoading: isAuthorLoading,
+                  fetchNextPage: fetchAuthorNextPage,
+                  hasNextPage: hasAuthorNextPage,
+                  isFetchingNextPage: isFetchingAuthorNextPage,
+                  isFetching: isFetchingAuthor,
+                  isError: isErrorAuthor,
+                }}
               />
               <TopIssuesAuthors />
             </>

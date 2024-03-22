@@ -2,8 +2,8 @@ import { useGlobalUserStore } from "@/stores/user-store";
 import { serialize } from "./utils";
 
 export const cFetchWithAuth = (params) => {
-  const { token } = useGlobalUserStore.getState();
-  return cFetch({ ...params, token });
+  const { token, project_name = null } = useGlobalUserStore.getState();
+  return cFetch({ ...params, token, project_name });
 };
 
 export const cFetch = async ({
@@ -13,6 +13,7 @@ export const cFetch = async ({
   body = null,
   baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL,
   qParams = null,
+  project_name = null
 }) => {
 
   const HTTP_TIMEOUT = 20000; // Timeout 20 seconds
@@ -27,6 +28,7 @@ export const cFetch = async ({
         accept: "application.json",
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(project_name ? {current_project: project_name} : {})
       },
       ...(body ? { body: JSON.stringify(body) } : {}),
       Cache: "default",

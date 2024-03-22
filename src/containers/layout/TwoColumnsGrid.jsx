@@ -46,7 +46,7 @@ export default function TwoColumnsGrid({
             return (
               <SectionBox
                 key={idx}
-                title={rightTitle[idx]}
+                title={leftTitle[idx]}
                 RightButtonComponent={
                   isLeftDropdownMultiple &&
                   leftDropdownText[idx]?.length > 0 && (

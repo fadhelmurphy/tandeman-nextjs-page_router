@@ -4,6 +4,7 @@ import { create } from 'zustand';
 const useGlobalUserStore = create((set) => ({
     user: null,
     token: null,
+    project_name: null,
     status: 'initial',
   setUser: (newData) => set(newData),
 }));
