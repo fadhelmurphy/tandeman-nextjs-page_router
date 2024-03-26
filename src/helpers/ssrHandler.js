@@ -13,8 +13,9 @@ const withSSRHandler = (handler = () => {}) => async (context) => {
     context.res
   );
   const cookies = new Cookies(context.req, context.res)
+  const getProjectId = cookies.get('project_id') ?? null
   const getProjectName = cookies.get('project_name') ?? null
-  if (!token || !getProjectName) {
+  if (!token || !getProjectId) {
     // Tidak ada header Authorization, mungkin perlu memberikan respons 401 Unauthorized
     return {
       redirect: {
@@ -37,6 +38,7 @@ const withSSRHandler = (handler = () => {}) => async (context) => {
       userData: {
         user,
         token,
+        project_id: getProjectId,
         project_name: getProjectName
       },
     },

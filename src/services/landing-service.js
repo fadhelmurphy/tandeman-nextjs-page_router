@@ -103,7 +103,7 @@ const landingService = {
       labels: Object.keys(groupedData),
       datasets: [
         ...Object.keys(getKeywords).map((label) => {
-          const codeColors = random_rgba()
+          const codeColors = random_rgba(0.2)
           return {
             label: label,
             data: getKeywords ? getKeywords[label] : [0],

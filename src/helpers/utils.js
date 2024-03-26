@@ -80,7 +80,7 @@ export const formatCompactNumber = (number) => {
   return number.toLocaleString(undefined, { maximumFractionDigits: 1 }) + units[unitIndex];
 }
 
-export const random_rgba = () => {
+export const random_rgba = (opacity = null) => {
   var o = Math.round, r = Math.random, s = 255;
-  return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+  return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + (opacity ? opacity : r().toFixed(1)) + ')';
 }

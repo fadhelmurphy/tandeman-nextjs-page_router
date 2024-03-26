@@ -88,7 +88,7 @@ export default function SectionMediaBox({data = [], isLoading = false, isError =
   }) : [];
 
   return <SimpleGrid cols={{ base: 1, sm: 5 }} my="xl">
-    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length} customEmptyComponent={EmptyComponent}>
+    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={!data.length} customEmptyComponent={EmptyComponent}>
       {stats}
     </LoadComponent>
   </SimpleGrid>;

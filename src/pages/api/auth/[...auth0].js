@@ -21,10 +21,11 @@ const afterCallback = async (req, res, session, _) => {
     const getProject = await authService.postAuthLogin({ user, token: session?.accessToken });
     const cookies = new Cookies(req, res)
     if (getProject?.project_info){
-      const {project_name} = getProject?.project_info
+      const {project_id, project_name} = getProject?.project_info
+      cookies.set("project_id", project_id)
       cookies.set("project_name", project_name)
     } else {
-      cookies.set("project_name", '', {maxAge: 0})
+      cookies.set("project_id", '', {maxAge: 0})
       cookies.set("appSession", '', {maxAge: 0})
       cookies.set("session", '', {maxAge: 0})
     }
@@ -42,6 +43,7 @@ const logoutCallback = handleLogout(async (req, res) => {
     user = { ...user, last_logout: getCurrentDateTime(), is_login: false };
     const getProject = await authService.postAuthLogin({ user, token: session?.accessToken });
     const cookies = new Cookies(req, res)
+    cookies.set("project_id",'',{maxAge: 0})
     cookies.set("project_name",'',{maxAge: 0})
   } catch (error) {
     console.log("Something went wrong! with error: ", error);
