@@ -1,4 +1,4 @@
-import { formatCompactNumber, toCapitalize } from "@/helpers/utils";
+import { formatCompactNumber, random_rgba, toCapitalize } from "@/helpers/utils";
 import { cFetchWithAuth } from "Helpers/fetch";
 const landingService = {
   getAllKeywords: (params) => cFetchWithAuth({ url: "/landing/keywords", qParams: params }),
@@ -71,24 +71,47 @@ const landingService = {
     const getData = await cFetchWithAuth({
       url: "/landing/count-articles-by-keyword",
     });
-    const codeColors = {
-      "Ganjar - Mahfud": "rgba(239,62,62,0.5)",
-      "Prabowo - Gibran": "rgba(227,242,255,0.5)",
-      "Anies - Muhaimin": "rgba(105,218,124, 0.5)",
-    };
-    const labels = getData?.map((item) =>
-      toCapitalize(item.keyword_group.replace("_", " - "))
-    );
+    function groupByPublicationDate(data) {
+      const groupedData = {};
+
+      data.forEach(entry => {
+          const date = entry.publication_date;
+          if (!groupedData[date]) {
+              groupedData[date] = [];
+          }
+          groupedData[date].push(entry.total);
+      });
+  
+      return groupedData;
+  }
+  function groupByKeywordGroup(data) {
+    const groupedData = {};
+
+    data.forEach(entry => {
+        const keywordGroup = entry.keyword_group;
+        if (!groupedData[keywordGroup]) {
+            groupedData[keywordGroup] = [];
+        }
+        groupedData[keywordGroup].push(entry.total);
+    });
+
+    return groupedData;
+}
+  const groupedData = groupByPublicationDate(getData);
+  const getKeywords = groupByKeywordGroup(getData)
     const res = {
-      labels,
+      labels: Object.keys(groupedData),
       datasets: [
-        ...Object.keys(codeColors).map((label, idx) => ({
-          label: label,
-          data: getData ? getData[idx].total : 0,
-          borderColor: codeColors[label],
-          backgroundColor: codeColors[label],
-          fill: "origin",
-        })),
+        ...Object.keys(getKeywords).map((label) => {
+          const codeColors = random_rgba()
+          return {
+            label: label,
+            data: getKeywords ? getKeywords[label] : [0],
+            borderColor: codeColors,
+            backgroundColor: codeColors,
+            fill: "origin",
+          }
+        }),
       ],
     };
     return res;
