@@ -12,7 +12,7 @@ export default function ClusterExtraction({
 }) {
   return (
     <>
-      <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length}>
+      <LoadComponent isLoading={isLoading} isError={isError} isEmpty={!data.length}>
         <Container
           px="lg"
           style={{

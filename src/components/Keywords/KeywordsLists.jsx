@@ -11,7 +11,7 @@ export default function KeywordsLists({
   isError = false
  }) {
   return (
-    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length}>
+    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={!data.length}>
 
     <div
       style={{

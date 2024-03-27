@@ -90,7 +90,7 @@ export default function MetaDataLists({
           </Text>
         </Paper>
       </Container>
-      <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length}>
+      <LoadComponent isLoading={isLoading} isError={isError} isEmpty={!data.length}>
         <Table.ScrollContainer
           p="lg"
           pt="0"

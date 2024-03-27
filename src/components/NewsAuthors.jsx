@@ -10,7 +10,7 @@ export default function NewsAuthors({
   isError = false,
 }) {
   return (
-    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={data.length}>
+    <LoadComponent isLoading={isLoading} isError={isError} isEmpty={!data.length}>
       <Container
         pb="lg"
         px="lg"
