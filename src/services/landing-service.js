@@ -164,8 +164,7 @@ const landingService = {
     });
     const res = getData?.length ? getData.map((item) => ({
       ...item,
-      author: toCapitalize(item.author),
-      tags: toCapitalize(item.tags),
+      metadata: toCapitalize(item.metadata),
     })) : [];
     return res;
   },

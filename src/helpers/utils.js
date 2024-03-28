@@ -61,23 +61,17 @@ export const toCapitalize = (text) => {
 }
 
 export const formatCompactNumber = (number) => {
-  // Check if the number is valid
-  if (isNaN(number)) return 'Invalid number';
+  // Definisikan opsi untuk pemformatan angka
+  let options = {
+    notation: "compact",     // Gunakan notasi compact
+    compactDisplay: "short", // Gunakan bentuk singkat untuk notasi compact
+  };
   
-  // Define the units
-  const units = ['K', 'M', 'B', 'T', 'Q'];
+  // Buat instance Intl.NumberFormat dengan lokal "en-US" dan opsi yang ditentukan
+  const usformatter = Intl.NumberFormat("en-US", options);
   
-  // Initialize index for units array
-  let unitIndex = 0;
-
-  // While the number is larger than or equal to 1000 and there are more units to use
-  while (number >= 1000 && unitIndex < units.length - 1) {
-      number /= 1000;
-      unitIndex++;
-  }
-
-  // Format the number with the appropriate unit
-  return number.toLocaleString(undefined, { maximumFractionDigits: 1 }) + units[unitIndex];
+  // Format angka yang diberikan menggunakan formatter yang dibuat
+  return usformatter.format(number);
 }
 
 export const random_rgba = (opacity = null) => {

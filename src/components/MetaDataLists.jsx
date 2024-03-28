@@ -54,21 +54,16 @@ export default function MetaDataLists({
               <Table.Td>
                 <Group gap="sm">
                   <Avatar size={60} radius="sm">
-                    {item.tags[0]}
+                    {item.metadata[0]}
                   </Avatar>
-                  <div>
                     <Text fz="sm" fw={500}>
-                      {item.tags}
+                      {item.metadata}
                     </Text>
-                    <Text c="dimmed" fz="xs">
-                      by {item.author}
-                    </Text>
-                  </div>
                 </Group>
               </Table.Td>
               <Table.Td ta="right">
                 <Text size="lg" color="blue">
-                  {item.tag_count}
+                  {item.total}
                 </Text>
               </Table.Td>
             </Table.Tr>
